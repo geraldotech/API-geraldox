@@ -4,6 +4,8 @@
 
 - GET /posts //fetch all
 - GET /post/:slug
+- DELETE /post/:slug
+- PUT /post/:slug
 
 ```
 

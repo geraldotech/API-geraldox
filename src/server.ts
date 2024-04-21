@@ -6,6 +6,8 @@ import { createTable } from './Controller/createTable.js'
 import { single } from './routers/single'
 import { getPosts } from './routers/getPosts'
 import { createPost } from './routers/createPost'
+import { deletePost } from './routers/deletePost'
+import {putPost} from './routers/putPost'
 import {slugExists} from '../utils/slugsExists'
 
 
@@ -23,9 +25,11 @@ app.get('/', () => {
   return 'Hello World'
 })
 
-app.register(single)
 app.register(createPost)
+app.register(single)
 app.register(getPosts)
+app.register(deletePost)
+app.register(putPost)
 
 
 // === AREA TESTES  ===
