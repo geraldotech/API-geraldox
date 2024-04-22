@@ -12,7 +12,6 @@ interface PostData {
   article: string
   category: string
   author: string
-  component: null | undefined // Corrected type definition
   published: boolean
   vuecomponent: string
 }
@@ -29,10 +28,9 @@ interface Post {
 }
 
 export async function createPost(app: FastifyInstance) {
-  app
-  .withTypeProvider<ZodTypeProvider>()
-  .post('/post', {
-       schema: {
+  app.withTypeProvider<ZodTypeProvider>()
+  .post('/post',    {
+      schema: {
         body: z.object({
           title: z.string().min(10).max(100),
           article: z.string().default(''),
@@ -40,11 +38,11 @@ export async function createPost(app: FastifyInstance) {
           author: z.string(),
           vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
           published: z.boolean().default(true),
-        })      
-      } 
+        }),
+      },
     },
     async (request, reply) => {
-     // const body = request.body as PostData
+      // const body = request.body as PostData
 
       const { title, article, category, author, vuecomponent, published } = request.body as PostData
 
@@ -63,7 +61,6 @@ export async function createPost(app: FastifyInstance) {
 
       // opcional, but check slugs exists before try add new post
 
-      console.log(post.slug)
       if (await slugExists(post.slug)) {
         return reply.status(409).send({ error: 'conflict slug already exists' })
       }

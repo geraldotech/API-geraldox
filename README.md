@@ -67,3 +67,17 @@ published: true
 vuecomponent: null
 
 ```
+
+- PUT json
+
+```json
+
+{
+"title": "Isabella Gosta de Bolo muito",
+"article": "VueJS3 with Typescript 4",
+"category": "games",
+"author": "Isabella",
+"published": true
+}
+
+```

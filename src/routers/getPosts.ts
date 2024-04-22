@@ -15,7 +15,7 @@ export async function getPosts(app: FastifyInstance) {
 
         // Execute SQL query to select published posts
        // const posts = await db.all('SELECT * FROM Posts WHERE published = 1')
-        const posts = await db.all('SELECT id, title, slug, author, createdAt, article, category FROM Posts WHERE published = 1')
+        const posts = await db.all('SELECT id, title, slug, author, createdAt, article, category, vuecomponent FROM Posts WHERE published = 1')
 
         // Close the database connection
         await db.close()
