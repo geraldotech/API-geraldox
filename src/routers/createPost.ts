@@ -35,7 +35,7 @@ export async function createPost(app: FastifyInstance) {
           title: z.string().min(10).max(100),
           article: z.string().default(''),
           category: z.string().default('uncategorized'), //if body no send, default, but if send must be string
-          author: z.string(),
+          author: z.string().max(20),
           vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
           published: z.boolean().default(true),
         }),
