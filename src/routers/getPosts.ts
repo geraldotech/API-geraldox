@@ -25,6 +25,7 @@ export async function getPosts(app: FastifyInstance) {
 
         // Return the selected posts
         return posts
+        
       } catch (error: any) {
         console.error('Error fetching published: ', error.message)
         return [] // Return an empty array in case of error

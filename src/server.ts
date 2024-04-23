@@ -11,7 +11,10 @@ import {putPost} from './routers/putPost'
 import { categories } from './routers/categories.js'
 import { category } from './routers/category.js'
 import { search } from './routers/search.js'
-import {slugExists} from '../utils/slugsExists'
+
+import {slugExists} from '../utils/slugsExists.js'
+import { getSingle } from '../tests/getSingle'
+import { updateSingle } from '../tests/updateSingle.js'
 
 
 const app = fastify()
@@ -40,7 +43,12 @@ app.register(search)
 
 // === AREA TESTES  ===
 // console.log('slugExists', await slugExists('burnout-revenge-you-can-play-now'))
-// console.log('slugExists', await slugExists('burnout-revenge-you-can-play-now-323'))
+// slugExists('burnout-revenge-you-can-play-now').then(r => console.log(r))
+
+//getSingle(1).then(r => console.log(r))
+//updateSingle(null, 10).then(r => console.log(r))
+
+
 
 app
   .listen({

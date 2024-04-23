@@ -30,8 +30,8 @@ export async function putPost(app: FastifyInstance) {
           article: z.string().optional(), // keep data in database
           category: z.string().optional(), //if body no send, default, but if send must be string
           author: z.string().optional(),
-          vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
           published: z.boolean().optional(),
+          vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
         }),
       },
     },
@@ -40,8 +40,7 @@ export async function putPost(app: FastifyInstance) {
 
       const { slug } = request.params as { slug: string }
 
-      const { title, article, category, author, vuecomponent, published } = request.body as PostData
-
+      const { title, article, category, author, published, vuecomponent } = request.body as PostData      
 
       // Generate a new slug if the title has changed
       const newSlug = title ? getSlugFromString(title) : title
@@ -55,24 +54,35 @@ export async function putPost(app: FastifyInstance) {
           return
         }
 
-      const stmt = await db.prepare(`
-      UPDATE Posts 
-      SET 
-      title = COALESCE(?, title),
-      slug = COALESCE(?, slug),
-      article = COALESCE(?, article),
-      category = COALESCE(?, category),
-      author = COALESCE(?, author),
-      vuecomponent = ?,
-      published = COALESCE(?, published)
-      WHERE slug = ?      `)
+        // Construct the SQL query string
+        const sql = `
+        UPDATE Posts 
+        SET 
+          title = COALESCE(?, title),
+          slug = COALESCE(?, slug),
+          article = COALESCE(?, article),
+          category = COALESCE(?, category),
+          author = COALESCE(?, author),
+          published = COALESCE(?, published),
+          vuecomponent = COALESCE(?, vuecomponent)
+        WHERE slug = ?`
 
-    
+        // Prepare the SQL statement
+        const stmt = await db.prepare(sql)
 
-        await stmt.run(title, newSlug, article, category, author, vuecomponent, published, slug)
+        // Execute the SQL statement with appropriate parameters
+        if (vuecomponent === null) {
+          // If vuecomponent is null, bind null value
+          await stmt.run(title, newSlug, article, category, author, published, null, slug)
+        } else {
+          // If vuecomponent is not null, bind the provided value
+          await stmt.run(title, newSlug, article, category, author, published, vuecomponent, slug)
+        }
 
         // Finalize the statement
         await stmt.finalize()
+
+        //console.log(stmt) Statement { stmt: Statement { lastID: 0, changes: 1 } }
         //console.log('Post updated successfully')
 
         // Send response
@@ -80,6 +90,7 @@ export async function putPost(app: FastifyInstance) {
 
         // Close the database connection
         await db.close()
+
       } catch (error) {
         console.error('Error retrieving post:', error)
         reply.status(500).send({ error: 'Internal Server Error' })

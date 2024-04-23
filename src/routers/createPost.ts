@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { getSlugFromString } from '../../utils/getSlugFromString'
-import { createdAt2 } from '../../utils/createdAt2'
+import { createdAt2 } from '../../utils/createdAt'
 import { slugExists } from '../../utils/slugsExists'
 import { openDb } from '../configDB.js'
 

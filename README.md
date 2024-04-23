@@ -87,13 +87,9 @@ createdAt: Auto-generated Timestamps
   "article": "VueJS3 with Typescript 4",
   "category": "games",
   "author": "Isabella",
+  "published": true,
   "vuecomponent": "<BestComponent/>",
-  "published": true
 }
-
-// all objets are optional
-
-
 ```
 
 - zod in httppie
@@ -118,4 +114,5 @@ FastifyError [Error]: Failed building the validation schema for GET: /post/:slug
 
 # Next features:
 
-- updatedAt 
+- updatedAt?
+- images?
