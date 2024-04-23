@@ -1,7 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
-
 import { getSlugFromString } from '../../utils/getSlugFromString'
 import { createdAt2 } from '../../utils/createdAt2'
 import { slugExists } from '../../utils/slugsExists'
@@ -71,9 +70,9 @@ export async function createPost(app: FastifyInstance) {
 
         // Prepare SQL statement
         const stmt = await db.prepare(`
-      INSERT INTO Posts (title, slug, author, published, article, category, vuecomponent, createdAt)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `)
+        INSERT INTO Posts (title, slug, author, published, article, category,    vuecomponent, createdAt)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `)
 
         // Execute SQL statement with post data
         await stmt.run(

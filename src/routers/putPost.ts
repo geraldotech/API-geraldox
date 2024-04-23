@@ -42,6 +42,7 @@ export async function putPost(app: FastifyInstance) {
 
       const { title, article, category, author, vuecomponent, published } = request.body as PostData
 
+
       // Generate a new slug if the title has changed
       const newSlug = title ? getSlugFromString(title) : title
 
@@ -64,9 +65,9 @@ export async function putPost(app: FastifyInstance) {
       author = COALESCE(?, author),
       vuecomponent = ?,
       published = COALESCE(?, published)
-      WHERE slug = ?
-      `)
+      WHERE slug = ?      `)
 
+    
 
         await stmt.run(title, newSlug, article, category, author, vuecomponent, published, slug)
 
@@ -75,7 +76,7 @@ export async function putPost(app: FastifyInstance) {
         //console.log('Post updated successfully')
 
         // Send response
-        reply.status(200).send({ message: 'Post updated successfully', postSlug: newSlug, vuecomponent })
+        reply.status(200).send({ message: 'Post updated successfully', newSlug: newSlug, vuecomponent })
 
         // Close the database connection
         await db.close()

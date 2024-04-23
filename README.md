@@ -18,21 +18,22 @@
 
 ```js
 
-- GET /posts // fetch
+- POST /post/ // create
+
+- GET /posts // fetch all
 
 - GET /post/:slug // fetch single
 
-
 - DELETE /post/:slug // delete single
 
-- PUT /post/:slug // new blog post
+- PUT /post/:slug // edit blog post
 
 
 - GET /posts/categories // fetch all categories
 - GET /posts/category?name=android // fetch single
+- GET /posts/search?q=  // least three characters long
 
 ```
-
 
 ### `POST /post/`
 
@@ -48,8 +49,7 @@ vuecomponent: z.string().nullaboptional(), // optional se enviar muststring or n
 published: z.boolean().default(true),
 
 ```
-
-- Expected body JSON
+- POST Expected body JSON
 
 ```json
 {
@@ -77,6 +77,25 @@ createdAt: Auto-generated Timestamps
 
 ```
 
+- PUT maximum expected body JSON
+
+> change title will change slug
+
+```json
+{
+  "title": "Isabella gosta muito de bolo",
+  "article": "VueJS3 with Typescript 4",
+  "category": "games",
+  "author": "Isabella",
+  "vuecomponent": "<BestComponent/>",
+  "published": true
+}
+
+// all objets are optional
+
+
+```
+
 - zod in httppie
 
   - if try send vuecomponent a number instead string: `"Expected string, received number\`
@@ -87,17 +106,7 @@ createdAt: Auto-generated Timestamps
 
 - com zod é retornado um erro em caso de tipo de dados incorreto
 
-### `PUT json`
 
-```json
-{
-  "title": "Isabella gosta muito de bolo",
-  "article": "VueJS3 with Typescript 4",
-  "category": "games",
-  "author": "Isabella",
-  "published": true
-}
-```
 
 - no add typemodule in package.json it can cause problems can try import a file.ts you will need `import file from file.js` instead `import file from file`
 
@@ -109,7 +118,4 @@ FastifyError [Error]: Failed building the validation schema for GET: /post/:slug
 
 # Next features:
 
-
-categories page
-category single posts
-updatedAt 
+- updatedAt 

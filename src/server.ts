@@ -10,6 +10,7 @@ import { deletePost } from './routers/deletePost'
 import {putPost} from './routers/putPost'
 import { categories } from './routers/categories.js'
 import { category } from './routers/category.js'
+import { search } from './routers/search.js'
 import {slugExists} from '../utils/slugsExists'
 
 
@@ -34,6 +35,7 @@ app.register(deletePost)
 app.register(putPost)
 app.register(categories)
 app.register(category)
+app.register(search)
 
 
 // === AREA TESTES  ===

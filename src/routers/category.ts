@@ -1,13 +1,13 @@
 import { FastifyInstance } from 'fastify'
-import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
 import { openDb } from '../configDB.js'
 
 export async function category(app: FastifyInstance) {
   app.get('/posts/category', async (request, reply) => {
+    
     const { name } = request.query as { name: string }
+    const query = request.query as Record<string, string>
+    const hasQueryParams: boolean = 'name' in query
 
-    const hasQueryParams = 'name' in request.query
     if (!hasQueryParams) {
       reply.redirect('/posts/categories')
     }
