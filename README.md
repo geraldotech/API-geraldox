@@ -116,3 +116,9 @@ FastifyError [Error]: Failed building the validation schema for GET: /post/:slug
 
 - updatedAt?
 - images?
+
+
+# installed
+
+- npm install @fastify/static@next
+- npm i @fastify/cors

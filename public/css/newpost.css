@@ -1,0 +1,29 @@
+body{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(0, 98, 255);
+}
+
+.title{
+  text-align: center;
+}
+
+section {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  padding: .5rem;
+  width: 100%;
+  justify-content: flex-start;
+}
+select, input, textarea{
+  margin-block: 10px;
+  padding: 0.5rem;
+}
+
+.category {
+  text-align: left;
+}

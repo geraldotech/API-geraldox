@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>New Post</title>
+    <script src="./"></script>
+
+    <link
+      rel="stylesheet"
+      href="/public/css/newpost.css" />
+
+    <link
+      rel="stylesheet"
+      href="/public/css/header.css" />
+
+    <script src="/views/partials/oi.js"></script>
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+   
+    <section class="title">
+      <h1>Add new post</h1>
+    </section>
+
+    <section>
+      <form action="">
+        <input
+          type="text"
+          placeholder="title" />
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          placeholder="article"></textarea>
+        <div class="category">
+          <label for="cat">Category:</label>
+          <select
+            name=""
+            id="cat">
+            <option
+              value=""
+              selected>
+              select
+            </option>
+            <option value="">select</option>
+            <option value="">select</option>
+          </select>
+        </div>
+        <div>
+          <input
+          type="checkbox"
+          name="published"
+          id="published"
+          checked />
+          <label for="published">published</label>
+        </div>
+        <input
+          type="text"
+          placeholder="author" />
+        <input
+          type="text"
+          placeholder="vuecomponent" />
+     
+          <button>Create</button>
+       
+      </form>
+    </section>
+  </body>
+</html>

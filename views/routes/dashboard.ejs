@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="/public/css/dashboard.css" />
+      <link
+      rel="stylesheet"
+      href="/public/css/header.css" />
+
+
+    <script type="module" src="/public/js/dashboard.js"></script>
+  </head>
+  <body>
+   <div id="root">
+    <%- include('../partials/header') %>
+    <h1>Dashboard</h1>
+
+    <section>
+      <div class="cardsingle" v-for="post in posts" :key="posts.id">
+       <span> {{post.title}}</span> <a href="#">DELETE</a> | <a href="#">Edit</a>
+      </div>
+    </section>
+
+
+    <button @click="click">click</button>
+   </div>
+  </body>
+</html>
