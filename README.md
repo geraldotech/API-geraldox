@@ -4,6 +4,8 @@
 - [x] Typescript
 - [x] Zod
 - [x] sqlite
+- [x] VueJS 3 client side
+
 
 ### `Installation`
 
@@ -20,22 +22,29 @@
 
 - POST /post/ // create
 
-- GET /posts // fetch all
-
-- GET /post/:slug // fetch single
-
-- DELETE /post/:slug // delete single
+- status to custom in cliend side
+  - 201 ok
+  - 409 conflit
+  - 400 bad request - zod validation
+  - 500 server error
 
 - PUT /post/:slug // edit blog post
 
+- DELETE /post/:slug // delete single
+
+- GET /posts // fetch all published posts
+- GET /post/:slug // fetch single
 
 - GET /posts/categories // fetch all categories
 - GET /posts/category?name=android // fetch single
-- GET /posts/search?q=  // least three characters long
+- GET /posts/search?q=  // search least three characters long
 
 ```
 
-### `POST /post/`
+
+## Check the body JSON requests examples:
+
+### `POST`
 
 -  zod schema
 
@@ -43,7 +52,7 @@
 
 title: z.string().min(10).max(100),
 article: z.string().default(''),
-category: z.string().de('uncategorized'), //if body no sdefault, but if send must be string
+category: z.string().default('uncategorized'), //if body no sdefault, but if send must be string
 author: z.string(),
 vuecomponent: z.string().nullaboptional(), // optional se enviar muststring or null, default is null
 published: z.boolean().default(true),
@@ -77,9 +86,10 @@ createdAt: Auto-generated Timestamps
 
 ```
 
-- PUT maximum expected body JSON
+### - `PUT` 
 
-> change title will change slug
+> change title will change slug!
+> maximum expected body JSON
 
 ```json
 {
@@ -91,6 +101,12 @@ createdAt: Auto-generated Timestamps
   "vuecomponent": "<BestComponent/>",
 }
 ```
+
+
+### pages
+
+- POST ok
+
 
 - zod in httppie
 

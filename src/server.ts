@@ -2,14 +2,15 @@ import { fastify } from 'fastify'
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod'
 import { createTable } from './Controller/createTable.js'
 
-import { single } from './routers/single'
-import { getPosts } from './routers/getPosts'
-import { createPost } from './routers/createPost'
-import { deletePost } from './routers/deletePost'
-import { putPost } from './routers/putPost'
-import { categories } from './routers/categories.js'
-import { category } from './routers/category.js'
-import { search } from './routers/search.js'
+import { single } from './routes/single.js'
+import { getPosts } from './routes/getPosts.js'
+import { createPost } from './routes/createPost.js'
+import { deletePost } from './routes/deletePost.js'
+import { putPost } from './routes/putPost.js'
+import { categories } from './routes/categories.js'
+import { category } from './routes/category.js'
+import { search } from './routes/search.js'
+import { dashboard } from './routes/dashboard.js'
 import { fastifyCors } from '@fastify/cors'
 
 const path = require('node:path')
@@ -17,18 +18,17 @@ import fastifyStatic from '@fastify/static'
 
 const app = fastify()
 
-
 app.register(fastifyCors, {
-  origin:'*',
+  origin: '*',
 })
 
-const publicFolder = path.join(__dirname, '../public');
+const publicFolder = path.join(__dirname, '../public')
 
 app.register(fastifyStatic, {
   root: publicFolder,
   prefix: '/public/', // Specify the prefix for serving static files
-});
- 
+})
+
 app.register(require('@fastify/view'), {
   engine: {
     ejs: require('ejs'),
@@ -37,18 +37,14 @@ app.register(require('@fastify/view'), {
 })
 
 // Define a route to render the HTML page
-app.get('/dashboard', (request, reply) => {
+/* app.get('/dashboard', (request, reply) => {
 
   if('newpost' in request.query){
     reply.view('./routes/newpost.ejs', {text: 'text'})
   }
 
-  reply.view('./routes/dashboard.ejs', { text: 'text' })
-})
-
-app.get('/newpost', (request, reply) => {
-  reply.view('./routes/newpost.ejs', {text: 'text'})
-})
+  reply.view('./routes/dashboard.ejs', { text: 'text', allposts: '' })
+}) */
 
 
 // Add schema validator and serializer
@@ -58,9 +54,20 @@ app.setSerializerCompiler(serializerCompiler)
 //createTable()
 //openDb();
 
-app.get('/', () => {
-  return 'Hello World'
+/* app.get('/', () => {
+ // return 'Hello World home'
+}) */
+
+
+app.get('/', (request, reply) => {
+  
+  reply.view('./routes/home.ejs')
 })
+
+app.get('/newpost', (request, reply) => {
+  reply.view('./routes/newPost.ejs', { text: 'text' })
+})
+
 
 app.register(createPost)
 app.register(single)
@@ -70,6 +77,7 @@ app.register(putPost)
 app.register(categories)
 app.register(category)
 app.register(search)
+app.register(dashboard)
 
 // === AREA TESTES  ===
 // console.log('slugExists', await slugExists('burnout-revenge-you-can-play-now'))

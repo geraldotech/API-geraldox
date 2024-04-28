@@ -3,7 +3,7 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { openDb } from '../configDB.js'
 
-import { getSlugFromString } from '../../utils/getSlugFromString'
+import { getSlugFromString } from '../../utils/getSlugFromString.js'
 /* 
 no updates
 id 

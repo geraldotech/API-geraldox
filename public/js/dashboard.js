@@ -13,7 +13,7 @@ const app = createApp({
       fetch('http://localhost:3333/posts').then((res => res.json())).then(data => posts.value = data)
     }
 
-    getall()
+    //getall()
 
     return {
       message,
