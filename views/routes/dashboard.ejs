@@ -39,8 +39,14 @@
       <section>
         <% for (let post of allposts) { %>
         <div class="cardsingle">
-        <%= post.id %>  <span><%= post.title %></span> <a href="#">DELETE</a> | <a href="/post/<%= post.slug %>">Edit</a> |
-          <span><%= post.published ? 'published✅' : 'private❌' %></span>
+          
+        <span><%= post.id %>  <a href="/post/<%= post.slug %>"><%= post.title %></a> </span> <a href="#">DELETE</a> | 
+      
+        <div>
+          <span><%= post.published ? 'published✅' : 'private❌' %></span> |
+          <a href="/dashboard/edit/<%= post.slug %>">Edit</a> |
+        </div>
+       
         
         </div>
         <% } %>

@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import { dashboardPosts } from '../../utils/dashboardPosts'
-import { request } from 'http'
+import {dashboardEditPost} from '../../utils/dashboardEditPosts'
 
 
 export async function dashboard(app: FastifyInstance) {
@@ -17,7 +17,15 @@ export async function dashboard(app: FastifyInstance) {
   }
 
   app.get('/dashboard/newpost', (request, reply) => { 
-      return reply.view('./routes/newPost.ejs', { text: 'text' })   
+      return reply.view('./routes/newPost.ejs', { text: 'text' })       
+  })
+
+  app.get('/dashboard/edit/:slug', async (request: any, reply) => {
+    const {slug} = request.params
+
+    const editPost = await dashboardEditPost(slug)
+
+    return reply.view('./routes/editPost.ejs', { single: editPost })       
     
   })
 }

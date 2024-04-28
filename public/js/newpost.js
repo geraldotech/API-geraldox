@@ -12,7 +12,7 @@ const app = createApp({
       category: 'android',
       author: 'GmapDev',
       vcomponent: '<SonyX8/>',
-      published: true,
+      published: false,
     }
 
 
@@ -21,12 +21,11 @@ const app = createApp({
     // get data from form
     const formData = ref({
       title: '',
-      article:
-        '',
+      article:'',
       category: '',
       author: '',
       vcomponent: '',
-      published: ''
+      published: false
     })
 
     // active the mocking data
@@ -36,11 +35,13 @@ const app = createApp({
       handlerPost(formData.value, baseURL)
     }
 
+ 
     function handlerPost(data, url) {
       // nao precisa se preocupar muito com os dados,
       // backend vai tratar
 
       const { title, article, category, author, vcomponent, published } = data
+      
 
       const json = JSON.stringify({
         title,
@@ -48,7 +49,7 @@ const app = createApp({
         category,
         author,
         vuecomponent: vcomponent,
-        published,
+        published: published
       })
 
       console.log(`json ok`, json)
@@ -75,6 +76,7 @@ const app = createApp({
           const resp = JSON.parse(ajaxn.response)
 
           serverresponse.value = resp.message
+          cleanValues()
         }
 
         // Bad Request get zod response
@@ -101,6 +103,18 @@ const app = createApp({
       }
     }
 
+
+    const cleanValues = () => {
+    
+      formData.value.title =  ''
+      formData.value.article =  '',
+      formData.value.category =  '',
+      formData.value.author =  '',
+      formData.value.vcomponent =  '',
+      formData.value.published =  ''    
+  }
+
+
     //  deep option of the watch function.
     //This option allows you to watch nested properties within reactive objects.
 
@@ -116,7 +130,7 @@ const app = createApp({
     return {
       submitHandler,
       formData,
-      serverresponse,
+      serverresponse, cleanValues
     }
   },
 })

@@ -8,8 +8,7 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
-    <title>New Post</title>
-   
+    <title>Edit Post</title>
 
     <link
       rel="stylesheet"
@@ -20,14 +19,14 @@
       href="/public/css/header.css" />
 
     <script
-      src="/public/js/newpost.js"
+      src="/public/js/editPost.js"
       type="module"></script>
   </head>
   <body>
     <%- include('../partials/header') %>
 
     <section class="title">
-      <h1>Add new post</h1>
+      <h1>Edit post</h1>
     </section>
 
     <div id="root">
@@ -35,61 +34,92 @@
         <form
           action=""
           @submit.prevent="submitHandler">
-          <input
-            type="text"
-            v-model="formData.title"
-            placeholder="title" />
+          <div>
+            CreatedAt:
+            <input
+              type="text"
+              value="<%- single.createdAt %>"
+              disabled />
+          </div>
+          <div>
+            Title:
+            <input
+              type="text"
+              ref="titleRef"            
+              value="<%- single.title %>"
+              placeholder="title" />
+          </div>
+
+          <div>
+            slug:
+            <input
+              type="text"
+              ref="slugPostRef"
+              data-slug="<%- single.slug %>"
+              value="<%- single.slug %>"            
+              disabled />
+          </div>
+
           <textarea
-            name=""
-            id=""
+          ref="articleRef"
             cols="30"
             rows="10"
-            v-model="formData.article"
+            value="<%- single.article %>"
             placeholder="article"></textarea>
           <div class="category">
+            <p
+              ref="catBackend"
+              data-cat="<%- single.category %>"></p>
+
             <label for="cat">Category:</label>
             <select
               id="cat"
-              v-model="formData.category">
-              <option
-                value=""
-                selected>
-                select
-              </option>
-              
+              ref="catRef"
+              v-model="selectedCategory">
               <option value="android">Android</option>
               <option value="windows">Windows</option>
-              <option value="music">Music</option> 
-              
+              <option value="music">Music</option>
+              <option value="network">network</option>
+              <option value="gmapdev">Gmapdev</option>
+              <option value="uncategorized">uncategorized</option>
             </select>
           </div>
 
-          <input
-            type="text"
-            v-model="formData.author"
-            placeholder="author" />
-
-          <input
-            type="text"
-            v-model="formData.vcomponent"
-            placeholder="vcomponent" />
+          <div>
+            Author:
+            <input
+              ref="authorRef"
+              type="text"
+              value="<%- single.author %>"
+              placeholder="author" />
+          </div>
 
           <div>
+            Vuecomponent:
             <input
-              type="checkbox"
-              name="published"
-              id="published"
-              v-model="formData.published"
-              checked />
+              type="text"
+              ref="vuecompoRef"
+              value="<%- single.vuecomponent %>"
+              placeholder="vcomponent" />
+          </div>
+
+          <div>
+            <input type="checkbox" name="published" id="published"
+            ref="publishedRef" <%- single.published ? 'checked' : '' %> />
+
             <label for="published">published</label>
           </div>
           <button>Create</button>
 
           <div>
-            {{serverresponse}}    
+            {{ serverresponse }}
           </div>
         </form>
       </section>
+
+      <%= // JSON.stringify(single) %>
+
+      <button @click="test()">test</button>
     </div>
   </body>
 </html>

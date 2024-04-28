@@ -5,5 +5,5 @@ export function getSlugFromString(input: any) {
     .toLowerCase()
     .replace(/[^\w\s]/g, '')
     .replace(/\s+/g, '-')
-    .slice(0, 40)
+    .slice(0, 75)
 }
