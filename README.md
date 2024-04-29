@@ -105,7 +105,9 @@ createdAt: Auto-generated Timestamps
 
 ### pages
 
-- POST ok
+- /dashboard
+  - /newpost
+  - /edit/:slug
 
 
 - zod in httppie

@@ -16,7 +16,7 @@
 
     <link
       rel="stylesheet"
-      href="/public/css/header.css" />
+      href="/public/css/main.css" />
 
     <script
       src="/public/js/editPost.js"
@@ -42,10 +42,11 @@
               disabled />
           </div>
           <div>
+            <p>change title will change slug by default</p>
             Title:
             <input
               type="text"
-              ref="titleRef"            
+              ref="titleRef"
               value="<%- single.title %>"
               placeholder="title" />
           </div>
@@ -56,12 +57,12 @@
               type="text"
               ref="slugPostRef"
               data-slug="<%- single.slug %>"
-              value="<%- single.slug %>"            
+              value="<%- single.slug %>"
               disabled />
           </div>
 
           <textarea
-          ref="articleRef"
+            ref="articleRef"
             cols="30"
             rows="10"
             value="<%- single.article %>"
@@ -104,15 +105,17 @@
           </div>
 
           <div>
-            <input type="checkbox" name="published" id="published"
-            ref="publishedRef" <%- single.published ? 'checked' : '' %> />
+            <input type="checkbox" name="published" id="published" ref="publishedRef" <%- single.published ? 'checked' : '' %> />
 
             <label for="published">published</label>
           </div>
-          <button>Create</button>
+          <button class="button primary">Update</button>
 
-          <div>
+          <div class="serverresponse">
             {{ serverresponse }}
+            <p v-show="newSlug">
+              <a :href="`/post/${newSlug}`" target="_blank">View post in {{newSlug}}</a>
+            </p>
           </div>
         </form>
       </section>

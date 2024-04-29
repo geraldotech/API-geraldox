@@ -9,15 +9,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
     <title>New Post</title>
-   
+    <link
+      rel="stylesheet"
+      href="/public/css/main.css" />
 
     <link
       rel="stylesheet"
       href="/public/css/newpost.css" />
-
-    <link
-      rel="stylesheet"
-      href="/public/css/header.css" />
 
     <script
       src="/public/js/newpost.js"
@@ -33,64 +31,78 @@
     <div id="root">
       <section>
         <form
-          action=""
-          @submit.prevent="submitHandler">
+        action=""
+        @submit.prevent="submitHandler">
+        <div>
+          Title:
           <input
             type="text"
             v-model="formData.title"
             placeholder="title" />
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="10"
-            v-model="formData.article"
-            placeholder="article"></textarea>
-          <div class="category">
-            <label for="cat">Category:</label>
-            <select
-              id="cat"
-              v-model="formData.category">
-              <option
-                value=""
-                selected>
-                select
-              </option>
-              
-              <option value="android">Android</option>
-              <option value="windows">Windows</option>
-              <option value="music">Music</option> 
-              
-            </select>
-          </div>
+        </div>
+        Content:
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          v-model="formData.article"
+          placeholder="article"></textarea>
+        <div class="category">
+          <label for="cat">Category:</label>
+          <select
+            id="cat"
+            v-model="formData.category">
+            <option
+              value=""
+              selected>
+              select
+            </option>
 
+            <option value="android">Android</option>
+            <option value="windows">Windows</option>
+            <option value="music">Music</option>
+          </select>
+        </div>
+
+        <div>
+          Author:
           <input
             type="text"
             v-model="formData.author"
             placeholder="author" />
+        </div>
+        vuecomponent:
+        <input
+          type="text"
+          v-model="formData.vcomponent"
+          placeholder="vcomponent" />
 
+        <div>
           <input
-            type="text"
-            v-model="formData.vcomponent"
-            placeholder="vcomponent" />
+            type="checkbox"
+            name="published"
+            id="published"
+            v-model="formData.published"
+            checked />
+          <label for="published">published</label>
+        </div>
 
-          <div>
-            <input
-              type="checkbox"
-              name="published"
-              id="published"
-              v-model="formData.published"
-              checked />
-            <label for="published">published</label>
-          </div>
-          <button>Create</button>
+        <div class="serverresponse">
+          {{ serverresponse }}
+        </div>
 
-          
-          <div>
-            {{serverresponse}}    
-          </div>
-        </form>
-        <button @click="cleanValues">cleanValues</button>
+        <div class="form-buttons">
+          <button class="button primary">Create</button>
+          <button
+            class="button seconday"
+            @click.prevent="cleanValues">
+            cleanValues
+          </button>
+        </div>
+
+       
+      </form>
       </section>
     </div>
   </body>

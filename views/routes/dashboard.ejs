@@ -11,22 +11,25 @@
     <title>Dashboard</title>
     <link
       rel="stylesheet"
-      href="/public/css/dashboard.css" />
-    <link
-      rel="stylesheet"
-      href="/public/css/header.css" />
+      href="/public/css/main.css" />
 
     <script
       type="module"
       src="/public/js/dashboard.js"></script>
   </head>
   <body>
-    <div id="root">
+    <div
+      id="root"
+      class="dashboard">
       <%- include('../partials/header') %>
       <h1>Dashboard</h1>
 
-      <a href="/dashboard/newpost">NewPost</a>
-<!-- 
+      <a
+        href="/dashboard/newpost"
+        class="button primary"
+        >NewPost</a
+      >
+      <!-- 
       <section>
         <div
           class="cardsingle"
@@ -36,25 +39,25 @@
         </div>
       </section> -->
 
-      <section>
+      <section id="listall">
         <% for (let post of allposts) { %>
-        <div class="cardsingle">
-          
-        <span><%= post.id %>  <a href="/post/<%= post.slug %>"><%= post.title %></a> </span> <a href="#">DELETE</a> | 
-      
+
         <div>
-          <span><%= post.published ? 'published✅' : 'private❌' %></span> |
-          <a href="/dashboard/edit/<%= post.slug %>">Edit</a> |
-        </div>
-       
-        
+          <span>[<%= post.id %>] <a href="/post/<%= post.slug %>"><%= post.title %></a> </span>
+          <span><%= post.published ? 'published✅' : 'private❌' %></span>
+          <span class="buttons">
+            <a
+              href="/dashboard/edit/<%= post.slug %>"
+              class="button secondary"
+              >Edit</a
+            >
+            <button class="button danger">DELETE</button>
+          </span>
         </div>
         <% } %>
       </section>
 
       <button @click="click">click</button>
-
-     
     </div>
   </body>
 </html>

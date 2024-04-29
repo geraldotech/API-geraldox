@@ -9,6 +9,7 @@ const baseURL = 'http://localhost:3333/post'
 const app = createApp({
   setup() {
     const serverresponse = ref('')
+    const newSlug = ref('')
     const selectedCategory = ref('music')
     const slugPostRef = ref(null)
 
@@ -74,9 +75,6 @@ const app = createApp({
         vuecomponent: vcomponent,
         published,
       })
-
-      console.log(`json ok`, json)
-
       //ajax
       const ajaxn = new XMLHttpRequest()
       ajaxn.open('PUT', url)
@@ -99,6 +97,8 @@ const app = createApp({
           const resp = JSON.parse(ajaxn.response)
 
           serverresponse.value = resp.message
+          newSlug.value = resp.newSlug
+          location.href = `/dashboard/edit/${resp.newSlug}`
         }
 
         // Bad Request get zod response
@@ -153,9 +153,15 @@ const app = createApp({
       { deep: true }
     )
 
+    watch(serverresponse, () => {
+      setTimeout(()=> {
+        serverresponse.value = ''
+      }, 1000)
+    })
+
     return {
       submitHandler,
-      serverresponse,
+      serverresponse, newSlug,
       selectedCategory,
       catBackend,
       titleRef,
