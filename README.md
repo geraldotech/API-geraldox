@@ -22,7 +22,7 @@
 
 - POST /post/ // create
 
-- status to custom in cliend side
+- status in client side:
   - 201 ok
   - 409 conflit
   - 400 bad request - zod validation
@@ -41,8 +41,7 @@
 
 ```
 
-
-## Check the body JSON requests examples:
+## The body JSON requests examples:
 
 ### `POST`
 
@@ -108,6 +107,8 @@ createdAt: Auto-generated Timestamps
 - /dashboard
   - /newpost
   - /edit/:slug
+
+
 
 
 - zod in httppie
