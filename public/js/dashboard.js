@@ -9,8 +9,30 @@ const app = createApp({
       console.log(`click`)
     }
 
-    async function getall(){
-      fetch('http://localhost:3333/posts').then((res => res.json())).then(data => posts.value = data)
+    const handlerDelete = (slug) => {
+      if (confirm('Delete ?')) {
+        const ajaxn = new XMLHttpRequest()
+
+        ajaxn.open('DELETE', `http://localhost:3333/post/${slug}`)
+
+        ajaxn.onload = function () {
+          if (this.readyState === XMLHttpRequest.DONE) {
+            // Get and convert the responseText into JSON
+            console.log('Request was a success')
+          }
+          // == server response ==
+
+          alert(JSON.parse(ajaxn.response).message)
+          location.reload()
+        }
+        ajaxn.send()
+      }
+    }
+
+    async function getall() {
+      fetch('http://localhost:3333/posts')
+        .then((res) => res.json())
+        .then((data) => (posts.value = data))
     }
 
     //getall()
@@ -19,10 +41,10 @@ const app = createApp({
       message,
       click,
       getall,
-      posts
+      posts,
+      handlerDelete,
     }
   },
 })
 
-
-app.mount("#root")
+app.mount('#root')

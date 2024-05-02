@@ -51,13 +51,16 @@
               class="button secondary"
               >Edit</a
             >
-            <button class="button danger">DELETE</button>
+            <button
+              class="button danger"
+              data-slug=""
+              @click="handlerDelete('<%= post.slug %>')">
+              DELETE
+            </button>
           </span>
         </div>
         <% } %>
       </section>
-
-      <button @click="click">click</button>
     </div>
   </body>
 </html>

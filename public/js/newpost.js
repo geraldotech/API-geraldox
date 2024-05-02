@@ -4,7 +4,6 @@ const baseURL = 'http://localhost:3333/post'
 
 const app = createApp({
   setup() {
-
     const mokeData = {
       title: 'Sony Ericsson Xperia X8',
       article:
@@ -15,17 +14,16 @@ const app = createApp({
       published: false,
     }
 
-
     const serverresponse = ref('')
 
     // get data from form
     const formData = ref({
       title: '',
-      article:'',
+      article: '',
       category: '',
       author: '',
       vcomponent: '',
-      published: false
+      published: true,
     })
 
     // active the mocking data
@@ -35,13 +33,11 @@ const app = createApp({
       handlerPost(formData.value, baseURL)
     }
 
- 
     function handlerPost(data, url) {
       // nao precisa se preocupar muito com os dados,
       // backend vai tratar
 
       const { title, article, category, author, vcomponent, published } = data
-      
 
       const json = JSON.stringify({
         title,
@@ -49,10 +45,8 @@ const app = createApp({
         category,
         author,
         vuecomponent: vcomponent,
-        published: published
+        published: formData.value.published,
       })
-
-      console.log(`json ok`, json)
 
       //ajax
       const ajaxn = new XMLHttpRequest()
@@ -103,17 +97,10 @@ const app = createApp({
       }
     }
 
-
     const cleanValues = () => {
-    
-      formData.value.title =  ''
-      formData.value.article =  '',
-      formData.value.category =  '',
-      formData.value.author =  '',
-      formData.value.vcomponent =  '',
-      formData.value.published =  ''    
-  }
-
+      formData.value.title = ''
+      ;(formData.value.article = ''), (formData.value.category = ''), (formData.value.author = ''), (formData.value.vcomponent = ''), (formData.value.published = '')
+    }
 
     //  deep option of the watch function.
     //This option allows you to watch nested properties within reactive objects.
@@ -130,7 +117,8 @@ const app = createApp({
     return {
       submitHandler,
       formData,
-      serverresponse, cleanValues
+      serverresponse,
+      cleanValues,
     }
   },
 })

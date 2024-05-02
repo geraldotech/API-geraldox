@@ -10,7 +10,7 @@ const app = createApp({
   setup() {
     const serverresponse = ref('')
     const newSlug = ref('')
-    const selectedCategory = ref('music')
+    const selectedCategory = ref(null)
     const slugPostRef = ref(null)
 
     const catBackend = ref(null)
@@ -22,6 +22,7 @@ const app = createApp({
     const authorRef = ref('')
     const vuecompoRef = ref('')
     const publishedRef = ref('')
+    const updateslugRef = ref(false)
 
     // get data from form
     const formData = ref({
@@ -52,20 +53,18 @@ const app = createApp({
     }
 
     function handlerPost(data, url) {
-
-
-       // obj constructor from refs onClick
-       const newPostData = {
+      // obj constructor from refs onClick
+      const newPostData = {
         title: titleRef.value.value,
         article: articleRef.value.value,
         category: catRef.value.value,
         author: authorRef.value.value,
         vcomponent: vuecompoRef.value.value,
-        published: publishedRef.value.checked
+        published: publishedRef.value.checked,
+        updateslug: updateslugRef.value.checked,
       }
 
-      const { title, article, category, author, vcomponent, published } = newPostData
-
+      const { title, article, category, author, vcomponent, published, updateslug } = newPostData
 
       const json = JSON.stringify({
         title,
@@ -74,7 +73,10 @@ const app = createApp({
         author,
         vuecomponent: vcomponent,
         published,
+        updateslug,
       })
+
+      console.log(json)
       //ajax
       const ajaxn = new XMLHttpRequest()
       ajaxn.open('PUT', url)
@@ -91,14 +93,14 @@ const app = createApp({
         // === get all server response ===
 
         const allresp = ajaxn
-        // console.log(allresp) // obj
+         //console.log(allresp) // obj
 
         if (ajaxn.status === 200) {
           const resp = JSON.parse(ajaxn.response)
 
           serverresponse.value = resp.message
           newSlug.value = resp.newSlug
-          location.href = `/dashboard/edit/${resp.newSlug}`
+         location.href = `/dashboard/edit/${resp.newSlug}`
         }
 
         // Bad Request get zod response
@@ -125,22 +127,23 @@ const app = createApp({
       }
     }
 
-    const test = () => {
-
+    const testJSON = () => {
       // obj constructor from refs onClick
       const newPostData = {
         title: titleRef.value.value,
-        body: bodyRef.value.value,
+        body: articleRef.value.value,
         category: catRef.value.value,
         author: authorRef.value.value,
         vuecomponent: vuecompoRef.value.value,
-        published: publishedRef.value.checked
+        published: publishedRef.value.checked,
+        updateslug: updateslugRef.value.checked,
       }
 
+      console.log(newPostData)
 
       //console.log(newPostData)
 
-/*       console.log(slugFromCurrentPost.value)
+      /*       console.log(slugFromCurrentPost.value)
       console.log(titleref.value.value) */
     }
 
@@ -154,22 +157,26 @@ const app = createApp({
     )
 
     watch(serverresponse, () => {
-      setTimeout(()=> {
+      setTimeout(() => {
         serverresponse.value = ''
       }, 1000)
     })
 
     return {
       submitHandler,
-      serverresponse, newSlug,
+      serverresponse,
+      newSlug,
       selectedCategory,
       catBackend,
       titleRef,
       slugPostRef,
-      test,
+      testJSON,
       articleRef,
       catRef,
-      authorRef, vuecompoRef, publishedRef
+      authorRef,
+      vuecompoRef,
+      publishedRef,
+      updateslugRef,
     }
   },
 })

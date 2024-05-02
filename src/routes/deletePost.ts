@@ -37,7 +37,6 @@ export async function deletePost(app: FastifyInstance) {
 
     const post = await handleDelete(slug)
 
-    console.log(post)
-    return reply.send(post.message)
+    return reply.status(201).send({message: post.message})
   })
 }

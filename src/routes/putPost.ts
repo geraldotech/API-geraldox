@@ -18,6 +18,7 @@ interface PostData {
   component: null | undefined // Corrected type definition
   published: boolean
   vuecomponent: string | null
+  updateslug: boolean
 }
 
 export async function putPost(app: FastifyInstance) {
@@ -32,6 +33,7 @@ export async function putPost(app: FastifyInstance) {
           author: z.string().optional(),
           published: z.boolean().optional(),
           vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
+          updateslug: z.boolean().optional()
         }),
       },
     },
@@ -40,10 +42,18 @@ export async function putPost(app: FastifyInstance) {
 
       const { slug } = request.params as { slug: string }
 
-      const { title, article, category, author, published, vuecomponent } = request.body as PostData      
-
-      // Generate a new slug if the title has changed
-      const newSlug = title ? getSlugFromString(title) : title
+      
+      const { title, article, category, author, published, vuecomponent, updateslug } = request.body as PostData      
+      
+      
+      const shouldUpdateSlug = updateslug
+      
+      //const newSlug = title ? getSlugFromString(title) : title
+      // Generate a new slug if user check option
+      const newSlug = shouldUpdateSlug ? getSlugFromString(title) : slug
+      
+      // console.log(`slugOld`, slug)
+      // console.log(`newSlug`, newSlug)
 
       try {
         const db = await openDb()

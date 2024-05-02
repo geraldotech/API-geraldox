@@ -61,6 +61,12 @@
               disabled />
           </div>
 
+          <div>
+            <input type="checkbox" name="" ref="updateslugRef" id="updateslug">
+            <label for="updateslug" title="generate a new slug based on title">update slug</label>
+
+          </div>
+
           <textarea
             ref="articleRef"
             cols="30"
@@ -71,17 +77,17 @@
             <p
               ref="catBackend"
               data-cat="<%- single.category %>"></p>
-
             <label for="cat">Category:</label>
             <select
               id="cat"
               ref="catRef"
               v-model="selectedCategory">
               <option value="android">Android</option>
-              <option value="windows">Windows</option>
+              <option value="developer">Developer</option>
               <option value="music">Music</option>
-              <option value="network">network</option>
+              <option value="network">Network</option>
               <option value="gmapdev">Gmapdev</option>
+              <option value="windows">Windows</option>
               <option value="uncategorized">uncategorized</option>
             </select>
           </div>
@@ -122,7 +128,7 @@
 
       <%= // JSON.stringify(single) %>
 
-      <button @click="test()">test</button>
+      <button @click="testJSON()">Debug JSON</button>
     </div>
   </body>
 </html>
