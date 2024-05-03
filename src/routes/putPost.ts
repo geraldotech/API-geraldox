@@ -96,7 +96,7 @@ export async function putPost(app: FastifyInstance) {
         //console.log('Post updated successfully')
 
         // Send response
-        reply.status(200).send({ message: 'Post updated successfully', newSlug: newSlug, vuecomponent })
+        reply.status(200).send({ message: 'Post updated successfully', updateslug, slug: newSlug, vuecomponent })
 
         // Close the database connection
         await db.close()

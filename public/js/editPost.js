@@ -93,25 +93,29 @@ const app = createApp({
         // === get all server response ===
 
         const allresp = ajaxn
-         //console.log(allresp) // obj
+        //console.log(allresp) // obj
 
         if (ajaxn.status === 200) {
           const resp = JSON.parse(ajaxn.response)
 
           serverresponse.value = resp.message
-          newSlug.value = resp.newSlug
-         location.href = `/dashboard/edit/${resp.newSlug}`
+          newSlug.value = resp.slug
+
+          // if server updated slug
+          if (resp.updateslug) {
+            setTimeout(() => {
+              location.href = `/dashboard/edit/${resp.slug}`
+            }, 1500)
+          }
         }
 
         // Bad Request get zod response
 
         if (ajaxn.status === 400) {
           const resp = JSON.parse(ajaxn.response)
-          console.log(resp)
 
           const resp2 = JSON.parse(resp.message)
           const { code, message } = resp2[0]
-          console.log(code, message)
 
           serverresponse.value = message
         }
@@ -158,8 +162,8 @@ const app = createApp({
 
     watch(serverresponse, () => {
       setTimeout(() => {
-        serverresponse.value = ''
-      }, 1000)
+       serverresponse.value = ''
+      }, 4000)
     })
 
     return {

@@ -42,7 +42,6 @@
               disabled />
           </div>
           <div>
-            <p>change title will change slug by default</p>
             Title:
             <input
               type="text"
@@ -62,9 +61,16 @@
           </div>
 
           <div>
-            <input type="checkbox" name="" ref="updateslugRef" id="updateslug">
-            <label for="updateslug" title="generate a new slug based on title">update slug</label>
-
+            <input
+              type="checkbox"
+              name=""
+              ref="updateslugRef"
+              id="updateslug" />
+            <label
+              for="updateslug"
+              title="generate a new slug based on title"
+              >update slug</label
+            >
           </div>
 
           <textarea
@@ -120,7 +126,11 @@
           <div class="serverresponse">
             {{ serverresponse }}
             <p v-show="newSlug">
-              <a :href="`/post/${newSlug}`" target="_blank">View post in {{newSlug}}</a>
+              <a
+                :href="`/post/${newSlug}`"
+                target="_blank"
+                >View post in {{ newSlug }}</a
+              >
             </p>
           </div>
         </form>
