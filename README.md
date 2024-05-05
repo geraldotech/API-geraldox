@@ -141,3 +141,10 @@ FastifyError [Error]: Failed building the validation schema for GET: /post/:slug
 
 - npm install @fastify/static@next
 - npm i @fastify/cors
+
+
+# Bugs
+
+- json dont send "" will broken the text, i need add a 
+
+```

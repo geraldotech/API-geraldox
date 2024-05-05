@@ -11,28 +11,22 @@ const app = createApp({
     const serverresponse = ref('')
     const newSlug = ref('')
     const selectedCategory = ref(null)
-    const slugPostRef = ref(null)
 
     const catBackend = ref(null)
     const slugFromCurrentPost = ref(null)
 
+    const postid = ref(null)
     const titleRef = ref('')
     const articleRef = ref('')
     const catRef = ref('')
     const authorRef = ref('')
     const vuecompoRef = ref('')
     const publishedRef = ref('')
-    const updateslugRef = ref(false)
 
-    // get data from form
-    const formData = ref({
-      title: '',
-      article: '',
-      category: '',
-      author: '',
-      vcomponent: '',
-      published: true,
-    })
+
+
+    const shouldUpdateSlug = ref(false)
+    const slugNewRef = ref('')
 
     onMounted(() => {
       // get post slugs from dom ejs and assign to selectedCategory
@@ -41,32 +35,45 @@ const app = createApp({
 
       // refs template
       // using the data
-      // console.log(slugPostRef.value.dataset.slug)
-      // using the value of input if exists
-      //  console.log(slugPostRef.value.value)
+      // console.log(slugNewRef.value.dataset.slug)
 
-      slugFromCurrentPost.value = slugPostRef.value.value
+      slugFromCurrentPost.value = slugNewRef.value.value
     })
 
     const submitHandler = () => {
-      handlerPost(formData.value, `${baseURL}/${slugFromCurrentPost.value}`)
+      handlerPost(`${baseURL}/${slugFromCurrentPost.value}`)
     }
 
-    function handlerPost(data, url) {
+    function handlerPost(url) {
+
+      const sendVueNullable = vuecompoRef.value.value === '' ? null : vuecompoRef.value.value
+      console.log(vuecompoRef.value.value)
+
       // obj constructor from refs onClick
+      // can send newslug even nao precisar??
       const newPostData = {
+        id: postid.value.dataset.postid,
         title: titleRef.value.value,
         article: articleRef.value.value,
         category: catRef.value.value,
         author: authorRef.value.value,
         vcomponent: vuecompoRef.value.value,
         published: publishedRef.value.checked,
-        updateslug: updateslugRef.value.checked,
+        updateslug: shouldUpdateSlug.value,
+        newslug: slugNewRef.value.value,
+        id: postid.value.dataset.postid,
       }
 
-      const { title, article, category, author, vcomponent, published, updateslug } = newPostData
+      const { id, title, article, category, author, vcomponent, published, updateslug, newslug } = newPostData
+
+      const newslugFormated = newslug.normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .slice(0, 75)
 
       const json = JSON.stringify({
+        id,
         title,
         article,
         category,
@@ -74,14 +81,30 @@ const app = createApp({
         vuecomponent: vcomponent,
         published,
         updateslug,
+        newslug: newslugFormated
       })
 
-      console.log(json)
+      const jsonNoSlug = JSON.stringify({
+        id,
+        title,
+        article,
+        category,
+        author,
+        vuecomponent: vcomponent,
+        published,
+        updateslug
+      })
+
+
+      // console.log(json)
       //ajax
       const ajaxn = new XMLHttpRequest()
       ajaxn.open('PUT', url)
       ajaxn.setRequestHeader('Content-Type', 'application/json')
-      ajaxn.send(json)
+
+      // custom obj
+      updateslug ? ajaxn.send(json) : ajaxn.send(jsonNoSlug)
+
 
       ajaxn.onload = function (e) {
         // Check if the request was a success
@@ -132,15 +155,18 @@ const app = createApp({
     }
 
     const testJSON = () => {
+      const sendVueNullable = vuecompoRef.value.value === '' ? null : vuecompoRef.value.value
       // obj constructor from refs onClick
       const newPostData = {
+        id: +postid.value.dataset.postid,
         title: titleRef.value.value,
         body: articleRef.value.value,
         category: catRef.value.value,
         author: authorRef.value.value,
-        vuecomponent: vuecompoRef.value.value,
+        vuecomponent: sendVueNullable,
         published: publishedRef.value.checked,
-        updateslug: updateslugRef.value.checked,
+        updateslug: shouldUpdateSlug.value,
+        newslug: slugNewRef.value.value
       }
 
       console.log(newPostData)
@@ -151,18 +177,9 @@ const app = createApp({
       console.log(titleref.value.value) */
     }
 
-    watch(
-      formData,
-      (newValue, oldvalue) => {
-        // console.log(`changing data`, newValue.published)
-        // console.log(`watch checkbox`)
-      },
-      { deep: true }
-    )
-
     watch(serverresponse, () => {
       setTimeout(() => {
-       serverresponse.value = ''
+        serverresponse.value = ''
       }, 4000)
     })
 
@@ -173,14 +190,15 @@ const app = createApp({
       selectedCategory,
       catBackend,
       titleRef,
-      slugPostRef,
+      slugNewRef,
       testJSON,
       articleRef,
       catRef,
       authorRef,
       vuecompoRef,
       publishedRef,
-      updateslugRef,
+      shouldUpdateSlug,
+      postid,
     }
   },
 })

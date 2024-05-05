@@ -31,15 +31,27 @@
 
     <div id="root">
       <section>
+        <p
+          ref="postid"
+          data-postid="<%- single.id %>"></p>
         <form
           action=""
           @submit.prevent="submitHandler">
-          <div>
-            CreatedAt:
-            <input
-              type="text"
-              value="<%- single.createdAt %>"
-              disabled />
+          <div class="createAndLastupdate">
+            <span>
+              CreatedAt:
+              <input
+                type="text"
+                value="<%- single.createdAt %>"
+                disabled />
+            </span>
+            <span>
+              lastUpdate:
+              <input
+                type="text"
+                value="<%- single.lastUpdate %>"
+                disabled />
+            </span>
           </div>
           <div>
             Title:
@@ -49,28 +61,25 @@
               value="<%- single.title %>"
               placeholder="title" />
           </div>
-
           <div>
-            slug:
+            <p>
+              slug:
+              <input
+                type="checkbox"
+                v-model="shouldUpdateSlug"
+                id="updateslug" />
+              <label
+                for="updateslug"
+                title="define a custom slug yourself"
+                >update slug</label
+              >
+            </p>
             <input
               type="text"
-              ref="slugPostRef"
+              ref="slugNewRef"
               data-slug="<%- single.slug %>"
               value="<%- single.slug %>"
-              disabled />
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              name=""
-              ref="updateslugRef"
-              id="updateslug" />
-            <label
-              for="updateslug"
-              title="generate a new slug based on title"
-              >update slug</label
-            >
+              :disabled="!shouldUpdateSlug" />
           </div>
 
           <textarea

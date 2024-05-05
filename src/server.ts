@@ -13,8 +13,19 @@ import { search } from './routes/search.js'
 import { dashboard } from './routes/dashboard.js'
 import { fastifyCors } from '@fastify/cors'
 
+
+import {slugExists} from '../utils/slugsExists.js'
+import {slugsExistsOnEdit} from '../utils/slugsExistsOnEdit.js'
+
+
+
+
+
+
 const path = require('node:path')
 import fastifyStatic from '@fastify/static'
+
+
 
 const app = fastify()
 
@@ -80,11 +91,12 @@ app.register(search)
 app.register(dashboard)
 
 // === AREA TESTES  ===
-// console.log('slugExists', await slugExists('burnout-revenge-you-can-play-now'))
-// slugExists('burnout-revenge-you-can-play-now').then(r => console.log(r))
 
+ // slugExists('download-windows-10-pro-mais-alem').then(r => console.log(r))
 //getSingle(1).then(r => console.log(r))
 //updateSingle(null, 10).then(r => console.log(r))
+
+//slugsExistsOnEdit('api-geraldox', '9').then(r => console.log(`em uso`, r))
 
 app
   .listen({

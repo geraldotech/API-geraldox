@@ -2,8 +2,8 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { openDb } from '../configDB.js'
-
-import { getSlugFromString } from '../../utils/getSlugFromString.js'
+import { createdAt2 } from '../../utils/createdAt'
+import { slugsExistsOnEdit } from '../../utils/slugsExistsOnEdit.js'
 /* 
 no updates
 id 
@@ -11,6 +11,7 @@ createAt
 */
 
 interface PostData {
+  id: string
   title: string
   article: string
   category: string
@@ -19,6 +20,7 @@ interface PostData {
   published: boolean
   vuecomponent: string | null
   updateslug: boolean
+  newslug: string
 }
 
 export async function putPost(app: FastifyInstance) {
@@ -27,33 +29,38 @@ export async function putPost(app: FastifyInstance) {
     {
       schema: {
         body: z.object({
+          id: z.string().optional(),
           title: z.string().min(10).max(100).optional(),
           article: z.string().optional(), // keep data in database
           category: z.string().optional(), //if body no send, default, but if send must be string
           author: z.string().optional(),
           published: z.boolean().optional(),
           vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
-          updateslug: z.boolean().optional()
+          updateslug: z.boolean().optional(), //if true can send a new slug form
+          newslug: z.string().max(75).optional(),
         }),
       },
     },
     async (request, reply) => {
-      // tudo que pode ser enviado pelo usuario na criação do post é o mesmo que pode vim a ser editado!
-
+      
       const { slug } = request.params as { slug: string }
+      
+      // tudo que pode ser enviado pelo usuario na criação do post é o mesmo que pode vim a ser editado!
+      const { id, title, article, category, author, published, vuecomponent, updateslug, newslug } = request.body as PostData
 
-      
-      const { title, article, category, author, published, vuecomponent, updateslug } = request.body as PostData      
-      
-      
+     
       const shouldUpdateSlug = updateslug
-      
-      //const newSlug = title ? getSlugFromString(title) : title
-      // Generate a new slug if user check option
-      const newSlug = shouldUpdateSlug ? getSlugFromString(title) : slug
-      
-      // console.log(`slugOld`, slug)
-      // console.log(`newSlug`, newSlug)
+
+      let newSlug
+      const slugsExistsOnEditCheck = await slugsExistsOnEdit(newslug, id)
+      if (shouldUpdateSlug) {
+        if (slugsExistsOnEditCheck) {
+          return reply.status(409).send({ error: 'Slug exists and is used by another post' })
+        }
+        if (!slugsExistsOnEditCheck) {
+          newSlug = shouldUpdateSlug ? newslug : slug
+        }
+      }
 
       try {
         const db = await openDb()
@@ -63,6 +70,8 @@ export async function putPost(app: FastifyInstance) {
           reply.status(404).send({ error: 'Post not found' })
           return
         }
+
+        const lastupdate = createdAt2()
 
         // Construct the SQL query string
         const sql = `
@@ -74,19 +83,20 @@ export async function putPost(app: FastifyInstance) {
           category = COALESCE(?, category),
           author = COALESCE(?, author),
           published = COALESCE(?, published),
-          vuecomponent = COALESCE(?, vuecomponent)
-        WHERE slug = ?`
+          lastupdate = COALESCE(?, lastupdate),
+          vuecomponent = ?
+          WHERE slug = ?`
 
         // Prepare the SQL statement
         const stmt = await db.prepare(sql)
 
         // Execute the SQL statement with appropriate parameters
-        if (vuecomponent === null) {
+        if (vuecomponent === null || vuecomponent === '') {
           // If vuecomponent is null, bind null value
-          await stmt.run(title, newSlug, article, category, author, published, null, slug)
+          await stmt.run(title, newSlug, article, category, author, published, lastupdate, null, slug)
         } else {
           // If vuecomponent is not null, bind the provided value
-          await stmt.run(title, newSlug, article, category, author, published, vuecomponent, slug)
+          await stmt.run(title, newSlug, article, category, author, published, lastupdate, vuecomponent, slug)
         }
 
         // Finalize the statement
@@ -100,7 +110,6 @@ export async function putPost(app: FastifyInstance) {
 
         // Close the database connection
         await db.close()
-
       } catch (error) {
         console.error('Error retrieving post:', error)
         reply.status(500).send({ error: 'Internal Server Error' })

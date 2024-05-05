@@ -40,7 +40,7 @@
       </section> -->
 
       <section id="listall">
-        <% for (let post of allposts) { %>
+        <% const reversedAllPosts = allposts.map(post => post).reverse() %> <% for (let post of reversedAllPosts) { %>
 
         <div>
           <span>[<%= post.id %>] <a href="/post/<%= post.slug %>"><%= post.title %></a> </span>

@@ -15,6 +15,7 @@ const app = createApp({
     }
 
     const serverresponse = ref('')
+    const customSlugData = ref('')
 
     // get data from form
     const formData = ref({
@@ -24,6 +25,7 @@ const app = createApp({
       author: '',
       vcomponent: '',
       published: true,
+      customslug: false,
     })
 
     // active the mocking data
@@ -37,7 +39,9 @@ const app = createApp({
       // nao precisa se preocupar muito com os dados,
       // backend vai tratar
 
-      const { title, article, category, author, vcomponent, published } = data
+      const { title, article, category, author, vcomponent } = data
+
+      const sendCustomSlug = formData.value.customslug ? customSlugData.value : ''
 
       const json = JSON.stringify({
         title,
@@ -46,7 +50,11 @@ const app = createApp({
         author,
         vuecomponent: vcomponent,
         published: formData.value.published,
+        slug: sendCustomSlug,
+        customslug: formData.value.customslug,
       })
+
+      // console.log(json)
 
       //ajax
       const ajaxn = new XMLHttpRequest()
@@ -71,6 +79,7 @@ const app = createApp({
 
           serverresponse.value = resp.message
           cleanValues()
+          setTimeout(() => serverresponse.value = '', 2000)
         }
 
         // Bad Request get zod response
@@ -99,17 +108,31 @@ const app = createApp({
 
     const cleanValues = () => {
       formData.value.title = ''
-      ;(formData.value.article = ''), (formData.value.category = ''), (formData.value.author = ''), (formData.value.vcomponent = ''), (formData.value.published = '')
+      formData.value.article = ''
+      formData.value.category = ''
+      formData.value.author = ''
+      formData.value.vcomponent = ''
+      formData.value.published = ''
     }
 
     //  deep option of the watch function.
     //This option allows you to watch nested properties within reactive objects.
-
     watch(
-      formData,
-      (newValue, oldvalue) => {
-        // console.log(`changing data`, newValue.published)
-        // console.log(`watch checkbox`)
+      () => formData.value,
+      (newValue, oldValue) => {
+        // This callback will be triggered when 'title' property changes
+        //console.log('Title changed from', oldValue, 'to', newValue);
+
+        // if o  check false
+        if (!formData.value.customslug) {
+          customSlugData.value = newValue.title
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .replace(/[^\w\s]/g, '')
+            .replace(/\s+/g, '-')
+            .slice(0, 75)
+        }
       },
       { deep: true }
     )
@@ -119,6 +142,7 @@ const app = createApp({
       formData,
       serverresponse,
       cleanValues,
+      customSlugData,
     }
   },
 })

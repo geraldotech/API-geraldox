@@ -24,7 +24,7 @@ body {
 /* dashboard */
 
 .dashboard {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -113,4 +113,10 @@ body {
 
 .button:hover {
   background-color: #0056b3;
+}
+
+/* edit */
+.createAndLastupdate {
+  display: flex;
+  justify-content: space-between;
 }
