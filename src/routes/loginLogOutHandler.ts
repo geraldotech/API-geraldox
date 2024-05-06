@@ -31,7 +31,6 @@ export async function loginLogOutHandler(app: FastifyInstance) {
         id: 1,
         user: 'geraldo',
       }
-
       // auth ok
       const id = 1 // viria do database
       // const token = app.jwt.sign({ id }, process.env.SECRET, {
@@ -47,15 +46,18 @@ export async function loginLogOutHandler(app: FastifyInstance) {
         secure: true, // Enable this in production for HTTPS
       })
 
-      return { accessToken: token }
+      const redirectTo = req.query.page || '/'
+
+      reply.send({ redirectUrl: redirectTo, accessToken: token })
+      // return { accessToken: token }
       // return reply.send({ auth: true, token: token })
       // Redirect the user to the page they were trying to access before
 
       // Redirect the user to the page they were trying to access before
-     // const redirectTo = req.query.page || '/' // Default to homepage if no redirect query parameter is provided
+      // const redirectTo = req.query.page || '/' // Default to homepage if no redirect query parameter is provided
 
       // Return the redirect URL along with the token
-     // reply.send({ redirectUrl: redirectTo, accessToken: token })
+      // reply.send({ redirectUrl: redirectTo, accessToken: token })
     }
     reply.status(500).send({ message: 'Login invalido' })
   })

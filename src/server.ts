@@ -69,9 +69,9 @@ app.decorate('authenticate', async (req: FastifyRequest, reply: FastifyReply) =>
   // console.log(`token `,req.jwt.verify)
 
   if (!token) {
-   return reply.status(401).send({ message: 'Authentication required' })
-    // Redirect to the login page
-    //return reply.redirect('/login')
+   //return reply.status(401).send({ message: 'Authentication required' })
+    // Redirect to the login page and query = dashboard
+    return reply.redirect('/login?page=dashboard')
   }
   // here decoded will be a different type by default but we want it to be of user-payload type
   const decoded = req.jwt.verify<FastifyJWT['id']>(token)
