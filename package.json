@@ -16,13 +16,20 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@fastify/cookie": "^9.3.1",
     "@fastify/cors": "^9.0.1",
+    "@fastify/formbody": "^7.4.0",
+    "@fastify/jwt": "^8.0.1",
+    "@fastify/session": "^10.7.2",
     "@fastify/static": "^6.4.0",
     "@fastify/view": "^9.0.0",
     "consolidate": "^1.0.3",
+    "dotenv-safe": "^9.1.0",
     "ejs": "^3.1.10",
     "fastify": "^4.26.2",
     "fastify-type-provider-zod": "^1.1.9",
+    "jsonwebtoken": "^9.0.2",
+    "remove": "^0.1.5",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "zod": "^3.22.5"

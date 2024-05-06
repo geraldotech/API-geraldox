@@ -147,4 +147,42 @@ FastifyError [Error]: Failed building the validation schema for GET: /post/:slug
 
 - json dont send "" will broken the text, i need add a 
 
+
+
+# JWT
+
+- [LINK1](https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-node-js-2/)
+- [LINK3](https://thatarif.in/posts/token-based-authentication-with-fastify-jwt)
+- [LINK2](https://medium.com/@atatijr/token-based-authentication-with-fastify-jwt-and-typescript-1fa5cccc63c5)
+
+- it a error on site examples `accessToken` vs `access_token`, you can console (req.cookies) for more details
+
+
+In Fastify, when you set a cookie without specifying an expiration time using the expires option, the cookie becomes a session cookie. Session cookies are temporary and are automatically deleted when the user's browser is closed.
+
+If you don't specify an expiration time for a cookie in Fastify, it will be treated as a session cookie by default. This means that the cookie will only persist for the duration of the user's browsing session. Once the user closes their browser, the cookie will be deleted automatically.
+
+Here's an example of setting a session cookie without specifying an expiration time:
+
+javascript
+Copy code
+
+```js
+
+const token = req.jwt.sign(payload);
+
+// Set the JWT token in the session cookie (session cookie: expires when the browser is closed)
+reply.setCookie('accessToken', token, {
+  path: '/',
+  httpOnly: true,
+  secure: true, // Enable this in production for HTTPS
+});
+
 ```
+
+In this example, the accessToken cookie will be automatically deleted when the user closes their browser, as it doesn't have an expiration time specified.
+
+
+
+
+

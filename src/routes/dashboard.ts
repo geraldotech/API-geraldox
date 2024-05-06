@@ -6,7 +6,9 @@ import {dashboardEditPost} from '../../utils/dashboardEditPosts'
 export async function dashboard(app: FastifyInstance) {
   try {
     
-    app.get('/dashboard', async (request, reply) => {     
+    app.get('/dashboard', {
+      preHandler: [app.authenticate],
+    }, async (request, reply) => {     
     
       const allposts = await dashboardPosts()
       reply.header('Cache-Control', 'no-cache') // Disable caching for this response
