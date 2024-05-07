@@ -23,26 +23,22 @@ interface PostData {
   newslug: string
 }
 
-
-const postSchema = z.object({
-  id: z.string().optional(),
-  title: z.string().min(10).max(100).optional(),
-  article: z.string().optional(), // keep data in database
-  category: z.string().optional(), //if body no send, default, but if send must be string
-  author: z.string().optional(),
-  published: z.boolean().optional(),
-  vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
-  updateslug: z.boolean().optional(), //if true can send a new slug form
-  newslug: z.string().max(75).optional(),
-})
-
 export async function putPost(app: FastifyInstance) {
-  app.put<{ Body: ZodType<typeof postSchema> }>(
+  app.withTypeProvider<ZodTypeProvider>().put(
     '/post/:slug',
     {
-      preHandler: [app.authenticate],
       schema: {
-        body: postSchema,
+        body: z.object({
+          id: z.string().optional(),
+          title: z.string().min(10).max(100).optional(),
+          article: z.string().optional(), // keep data in database
+          category: z.string().optional(), //if body no send, default, but if send must be string
+          author: z.string().optional(),
+          published: z.boolean().optional(),
+          vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
+          updateslug: z.boolean().optional(), //if true can send a new slug form
+          newslug: z.string().max(75).optional(),
+        }),
       },
     },
     async (request, reply) => {

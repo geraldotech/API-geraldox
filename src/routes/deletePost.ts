@@ -32,7 +32,8 @@ const handleDelete = async (slug: string) => {
 }
 
 export async function deletePost(app: FastifyInstance) {
-  app.delete('/post/:slug', async (request: any, reply) => {
+  app.delete('/post/:slug',   {
+    preHandler: [app.authenticate] }, async (request: any, reply) => {
     const { slug } = request.params
 
     const post = await handleDelete(slug)

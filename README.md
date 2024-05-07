@@ -148,7 +148,6 @@ FastifyError [Error]: Failed building the validation schema for GET: /post/:slug
 - json dont send "" will broken the text, i need add a 
 
 
-
 # JWT
 
 - [LINK1](https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-node-js-2/)
@@ -179,10 +178,15 @@ reply.setCookie('accessToken', token, {
 });
 
 ```
-
 In this example, the accessToken cookie will be automatically deleted when the user closes their browser, as it doesn't have an expiration time specified.
 
 
+## Auth routers
 
+/post
+/delete
+/put
+/dashboard
+/posts - need headers Bearer
 
 

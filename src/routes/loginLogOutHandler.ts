@@ -31,8 +31,7 @@ export async function loginLogOutHandler(app: FastifyInstance) {
         id: 1,
         user: 'geraldo',
       }
-      // auth ok
-      const id = 1 // viria do database
+
       // const token = app.jwt.sign({ id }, process.env.SECRET, {
       //   expiresIn: 10, // expires in 5min
       // })
@@ -46,9 +45,9 @@ export async function loginLogOutHandler(app: FastifyInstance) {
         secure: true, // Enable this in production for HTTPS
       })
 
-      const redirectTo = req.query.page || '/'
+      let redirectTo = req.query.page && req.query.page !== 'null' ? req.query.page : '/posts'
 
-      reply.send({ redirectUrl: redirectTo, accessToken: token })
+      return reply.status(200).send({ redirectUrl: redirectTo, accessToken: token })
       // return { accessToken: token }
       // return reply.send({ auth: true, token: token })
       // Redirect the user to the page they were trying to access before
@@ -71,6 +70,22 @@ export async function loginLogOutHandler(app: FastifyInstance) {
       secure: true, // Enable this in production for HTTPS
     })
 
-    return reply.send({ message: 'Logout successful' })
+    const htmlResponse = `
+    <html>
+    <head>
+        <title>Logout Page</title>
+    </head>
+    <body>
+        <h1>Logout Successful</h1>
+        <p>Your logout was successful. Thank you for using our service!
+        <a href="/login">Login page</a>
+        </p>
+    </body>
+    </html>
+`;
+
+return reply.type('text/html').send(htmlResponse);
+
+    //return reply.send({ message: 'Logout successful' })
   })
 }

@@ -19,12 +19,14 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
   })
   .then(response => response.json())
   .then(data => {
+    console.log(data)
     if (data.redirectUrl) {
       // Redirect the client to the specified URL
-      console.log(data.redirectUrl)
+    ///  console.log(data.redirectUrl)
       window.location.href = data.redirectUrl;
     } else {
       // Handle other responses (e.g., display an error message)
+     
     }
   })
     .catch((error) => {

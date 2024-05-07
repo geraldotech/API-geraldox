@@ -5,6 +5,12 @@ import { openDb } from '../configDB.js'
 
 export async function getPosts(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get('/posts', async (request, reply) => {
+    const authorization = request.headers.authorization?.split(' ')[1]
+
+    if (authorization !== 'GERALDODEVGPDEV') {
+      return reply.status(401).send({ message: 'Access Unauthorized' })
+    }
+
     const getPublishedPosts = async () => {
       try {
         const db = await openDb()

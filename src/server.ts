@@ -1,4 +1,4 @@
-import { fastify, FastifyReply, FastifyRequest } from 'fastify'
+import { fastify, FastifyReply, FastifyRequest, FastifyNextCallback  } from 'fastify'
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod'
 import { createTable } from './Controller/createTable.js'
 import { single } from './routes/single.js'
@@ -65,13 +65,16 @@ app.register(fastifyCookie, {
 app.decorate('authenticate', async (req: FastifyRequest, reply: FastifyReply) => {
   const token = req.cookies.accessToken
 
+  const requestedUrl = req.url.split('/')[1]
+
   // console.log(`token`, token)
   // console.log(`token `,req.jwt.verify)
 
   if (!token) {
-   //return reply.status(401).send({ message: 'Authentication required' })
+    //return reply.status(401).send({ message: 'Authentication required' })
     // Redirect to the login page and query = dashboard
-    return reply.redirect('/login?page=dashboard')
+   // return reply.redirect('/login?page=dashboard')
+    return reply.redirect(`/login?page=${requestedUrl}`)
   }
   // here decoded will be a different type by default but we want it to be of user-payload type
   const decoded = req.jwt.verify<FastifyJWT['id']>(token)
@@ -92,14 +95,45 @@ app.register(require('@fastify/view'), {
   templates: 'views',
 })
 
-// Middleware example
-
+// === Middlewares ===
 // https://fastify.dev/docs/latest/Reference/Hooks/#onrequest
 // app.addHook('onRequest', (request, reply, done) => {
 //   console.log('This is a middleware.', request.body);
 //   // Call next to pass control to the next matching route or handler
 //   done();
 // });
+
+interface TheParams {
+  req: FastifyRequest;
+  res: FastifyReply;
+  next: FastifyNextCallback;
+}
+
+const myMiddleware = (req, res, next) => {
+  console.log('This is my middleware');
+  next(); // Call next to move to the next middleware or route handler
+};
+
+function mycats(req, res, next){
+  console.log('This is the preHandler for /gatos');
+  const auth = req.cookies.accessToken
+
+
+  // send auth status for allroutes
+  if(!auth){
+    req.authStatus = { auth: false };
+    next()
+    return
+  }
+  req.authStatus = { auth: true };
+  next()
+ 
+}
+
+// Register the middleware with Fastify
+app.register(myMiddleware);
+
+// === Middlewares ===
 
 // Add schema validator and serializer
 app.setValidatorCompiler(validatorCompiler)
@@ -108,27 +142,11 @@ app.setSerializerCompiler(serializerCompiler)
 //createTable()
 //openDb();
 
-/* app.get('/', () => {
- // return 'Hello World home'
-}) */
 
 app.get('/', (request, reply) => {
+  // return 'Hello World home'
   reply.view('./routes/home.ejs')
 })
-
-app.get('/newpost', (request, reply) => {
-  reply.view('./routes/newPost.ejs', { text: 'text' })
-})
-
-app.get(
-  '/gato',
-  {
-    preHandler: [app.authenticate],
-  },
-  (req, reply) => {
-    reply.send('ok gatos ')
-  }
-)
 
 app.register(createPost)
 app.register(single)
@@ -141,6 +159,42 @@ app.register(search)
 app.register(dashboard)
 app.register(loginLogOutHandler)
 app.register(clientes)
+
+
+app.get(
+  '/gatos',
+  {
+    preHandler: mycats,
+  },
+  (req, reply) => {
+    
+    // 👉 getting autho from middle
+    const {auth} = req.authStatus
+
+    //👉 set custom headers isauth
+    // send a get include the headers in httpie
+    const {isauth} = req.headers
+    isauth ? console.log(`logado`, isauth) : console.log(`not logado`)
+
+    //check value if need
+    console.log(isauth === 'MASTERPIECE')
+
+
+    //👉 using the basic auth in httpie you can get value with:
+    console.log(req.headers.authorization)
+
+
+   
+
+    // slit only the authorization 'Bearer masterok'
+    //console.log(req.?headers.?authorization.split(' ')[1] === 'masterok')
+
+    // PS vc consegue enviar headers and auth same time, chooice one
+
+
+    reply.send(`ok cats your auth status is: ${auth}`)
+  }
+)
 
 // === AREA TESTES  ===
 

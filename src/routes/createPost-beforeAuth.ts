@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z, ZodType } from 'zod'
+import z from 'zod'
 import { getSlugFromString } from '../../utils/getSlugFromString'
 import { getSlugFromStringCustom } from '../../utils/getSlugFromStringCustom'
 import { createdAt2 } from '../../utils/createdAt'
@@ -30,31 +30,24 @@ interface Post {
   published: boolean
 }
 
-// Define Zod schema for the request body
-const postSchema = z.object({
-  title: z.string().min(10).max(100),
-  article: z.string().default(''),
-  category: z
-    .string()
-    .transform((val) => (val === '' ? 'uncategorized' : val))
-    .default('uncategorized'), // if body no has category, set a category with value or it send a category empty string a default
-  author: z.string().max(20),
-  vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
-  published: z.boolean().default(true),
-  slug: z.string().max(75).optional(),
-  customslug: z.boolean().optional(),
-})
-
-// Define type for the Zod type provider
-type ZodTypeProvider = { Body: ZodType<typeof postSchema> }
-
 export async function createPost(app: FastifyInstance) {
-  app.post<{ Body: ZodType<typeof postSchema> }>(
+  app.withTypeProvider<ZodTypeProvider>().post(
     '/post',
     {
-      preHandler: [app.authenticate],
       schema: {
-        body: postSchema,
+        body: z.object({
+          title: z.string().min(10).max(100),
+          article: z.string().default(''),
+          category: z
+            .string()
+            .transform((val) => (val === '' ? 'uncategorized' : val))
+            .default('uncategorized'), // if body no has category, set a category with value or it send a category empty string a default
+          author: z.string().max(20),
+          vuecomponent: z.string().nullable().optional(), // optional se enviar must be: string or null, default is null
+          published: z.boolean().default(true),
+          slug: z.string().max(75).optional(),
+          customslug: z.boolean().optional(),
+        }),
       },
     },
     async (request, reply) => {
