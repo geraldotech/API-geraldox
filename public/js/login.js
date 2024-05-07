@@ -2,6 +2,8 @@ const currentPageUrl = window.location.href;
 const params = new URL(currentPageUrl).searchParams;
 const page = params.get('page');
 
+console.log(page)
+
 
 document.getElementById('loginForm').addEventListener('submit', function (event) {
   event.preventDefault()
@@ -9,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
   const formData = new FormData(form)
   const credencials = Object.fromEntries(formData)
 
-  fetch(`/login?page=${page}`, {
+  fetch(`/login?page=${page ? page : ''}`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
