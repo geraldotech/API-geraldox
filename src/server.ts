@@ -1,4 +1,4 @@
-import { fastify, FastifyReply, FastifyRequest, FastifyNextCallback  } from 'fastify'
+import { fastify, FastifyReply, FastifyRequest, FastifyNextCallback } from 'fastify'
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod'
 import { createTable } from './Controller/createTable.js'
 import { single } from './routes/single.js'
@@ -73,7 +73,7 @@ app.decorate('authenticate', async (req: FastifyRequest, reply: FastifyReply) =>
   if (!token) {
     //return reply.status(401).send({ message: 'Authentication required' })
     // Redirect to the login page and query = dashboard
-   // return reply.redirect('/login?page=dashboard')
+    // return reply.redirect('/login?page=dashboard')
     return reply.redirect(`/login?page=${requestedUrl}`)
   }
   // here decoded will be a different type by default but we want it to be of user-payload type
@@ -104,34 +104,32 @@ app.register(require('@fastify/view'), {
 // });
 
 interface TheParams {
-  req: FastifyRequest;
-  res: FastifyReply;
-  next: FastifyNextCallback;
+  req: FastifyRequest
+  res: FastifyReply
+  next: FastifyNextCallback
 }
 
 const myMiddleware = (req, res, next) => {
-  console.log('This is my middleware');
-  next(); // Call next to move to the next middleware or route handler
-};
+  console.log('This is my middleware')
+  next() // Call next to move to the next middleware or route handler
+}
 
-function mycats(req, res, next){
-  console.log('This is the preHandler for /gatos');
+function mycats(req, res, next) {
+  console.log('This is the preHandler for /gatos')
   const auth = req.cookies.accessToken
 
-
   // send auth status for allroutes
-  if(!auth){
-    req.authStatus = { auth: false };
+  if (!auth) {
+    req.authStatus = { auth: false }
     next()
     return
   }
-  req.authStatus = { auth: true };
+  req.authStatus = { auth: true }
   next()
- 
 }
 
 // Register the middleware with Fastify
-app.register(myMiddleware);
+app.register(myMiddleware)
 
 // === Middlewares ===
 
@@ -141,7 +139,6 @@ app.setSerializerCompiler(serializerCompiler)
 
 //createTable()
 //openDb();
-
 
 app.get('/', (request, reply) => {
   // return 'Hello World home'
@@ -160,37 +157,30 @@ app.register(dashboard)
 app.register(loginLogOutHandler)
 app.register(clientes)
 
-
 app.get(
   '/gatos',
   {
     preHandler: mycats,
   },
   (req, reply) => {
-    
     // 👉 getting autho from middle
-    const {auth} = req.authStatus
+    const { auth } = req.authStatus
 
     //👉 set custom headers isauth
     // send a get include the headers in httpie
-    const {isauth} = req.headers
+    const { isauth } = req.headers
     isauth ? console.log(`logado`, isauth) : console.log(`not logado`)
 
     //check value if need
     console.log(isauth === 'MASTERPIECE')
 
-
     //👉 using the basic auth in httpie you can get value with:
     console.log(req.headers.authorization)
-
-
-   
 
     // slit only the authorization 'Bearer masterok'
     //console.log(req.?headers.?authorization.split(' ')[1] === 'masterok')
 
     // PS vc consegue enviar headers and auth same time, chooice one
-
 
     reply.send(`ok cats your auth status is: ${auth}`)
   }

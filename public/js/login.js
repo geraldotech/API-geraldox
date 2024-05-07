@@ -12,7 +12,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
   fetch(`/login?page=${page}`, {
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify(credencials),
