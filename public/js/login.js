@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
   const formData = new FormData(form)
   const credencials = Object.fromEntries(formData)
 
-  fetch(`/login?page=${page ? page : ''}`, {
+  fetch(`/login`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'

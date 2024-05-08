@@ -92,7 +92,9 @@ app.register(require('@fastify/view'), {
   engine: {
     ejs: require('ejs'),
   },
-  templates: 'views',
+ // templates: 'views',
+ templates: path.join(__dirname, 'views') // Specify the path to your views directory
+
 })
 
 // === Middlewares ===
@@ -142,7 +144,7 @@ app.setSerializerCompiler(serializerCompiler)
 
 app.get('/', (request, reply) => {
   // return 'Hello World home'
-  reply.view('./routes/home.ejs')
+  reply.view('/routes/home.ejs')
 })
 
 app.register(createPost)

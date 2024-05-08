@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Edit Post</title>
+
+    <link
+      rel="stylesheet"
+      href="/public/css/newpost.css" />
+
+    <link
+      rel="stylesheet"
+      href="/public/css/main.css" />
+
+    <script
+      src="/public/js/editPost.js"
+      type="module"></script>
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+
+    <section class="title">
+      <h1>Edit post</h1>
+    </section>
+
+    <div id="root">
+      <section>
+        <p
+          ref="postid"
+          data-postid="<%- single.id %>"></p>
+        <form
+          action=""
+          @submit.prevent="submitHandler">
+          <div class="createAndLastupdate">
+            <span>
+              CreatedAt:
+              <input
+                type="text"
+                value="<%- single.createdAt %>"
+                disabled />
+            </span>
+            <span>
+              lastUpdate:
+              <input
+                type="text"
+                value="<%- single.lastUpdate %>"
+                disabled />
+            </span>
+          </div>
+          <div>
+            Title:
+            <input
+              type="text"
+              ref="titleRef"
+              value="<%- single.title %>"
+              placeholder="title" />
+          </div>
+          <div>
+            <p>
+              slug:
+              <input
+                type="checkbox"
+                v-model="shouldUpdateSlug"
+                id="updateslug" />
+              <label
+                for="updateslug"
+                title="define a custom slug yourself"
+                >update slug</label
+              >
+            </p>
+            <input
+              type="text"
+              ref="slugNewRef"
+              data-slug="<%- single.slug %>"
+              value="<%- single.slug %>"
+              :disabled="!shouldUpdateSlug" />
+          </div>
+
+          <textarea
+            ref="articleRef"
+            cols="30"
+            rows="10"
+            value="<%- single.article %>"
+            placeholder="article"></textarea>
+          <div class="category">
+            <p
+              ref="catBackend"
+              data-cat="<%- single.category %>"></p>
+            <label for="cat">Category:</label>
+            <select
+              id="cat"
+              ref="catRef"
+              v-model="selectedCategory">
+              <option value="android">Android</option>
+              <option value="developer">Developer</option>
+              <option value="music">Music</option>
+              <option value="network">Network</option>
+              <option value="gmapdev">Gmapdev</option>
+              <option value="windows">Windows</option>
+              <option value="uncategorized">uncategorized</option>
+            </select>
+          </div>
+
+          <div>
+            Author:
+            <input
+              ref="authorRef"
+              type="text"
+              value="<%- single.author %>"
+              placeholder="author" />
+          </div>
+
+          <div>
+            Vuecomponent:
+            <input
+              type="text"
+              ref="vuecompoRef"
+              value="<%- single.vuecomponent %>"
+              placeholder="vcomponent" />
+          </div>
+
+          <div>
+            <input type="checkbox" name="published" id="published" ref="publishedRef" <%- single.published ? 'checked' : '' %> />
+
+            <label for="published">published</label>
+          </div>
+          <button class="button primary">Update</button>
+
+          <div class="serverresponse">
+            {{ serverresponse }}
+            <p v-show="newSlug">
+              <a
+                :href="`/post/${newSlug}`"
+                target="_blank"
+                >View post in {{ newSlug }}</a
+              >
+            </p>
+          </div>
+        </form>
+      </section>
+
+      <%= // JSON.stringify(single) %>
+
+      <button @click="testJSON()">Debug JSON</button>
+    </div>
+  </body>
+</html>
