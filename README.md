@@ -11,6 +11,14 @@
 
 `npm install`
 
+
+### setUP BaseURL and cors origin
+> baseURL from .env in soon
+
+- dashboard.js
+- editPost.js
+- newpost.js
+
 ## `RUN`
 
 `npm run server`

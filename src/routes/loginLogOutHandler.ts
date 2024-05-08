@@ -27,7 +27,6 @@ export async function loginLogOutHandler(app: FastifyInstance) {
     const { user, password } = req.body as LoginData
 
     if (user === 'geraldo' && password === '123') {
-
       const payload = {
         id: 1,
         user: 'geraldo',
@@ -67,7 +66,7 @@ export async function loginLogOutHandler(app: FastifyInstance) {
   app.get('/logout', (req, reply) => {
     reply.setCookie('accessToken', '', {
       expires: new Date(0), // Set expiration time to epoch
-      httpOnly: true,
+      httpOnly: false,
       secure: true, // Enable this in production for HTTPS
     })
 
@@ -83,9 +82,9 @@ export async function loginLogOutHandler(app: FastifyInstance) {
         </p>
     </body>
     </html>
-`;
+`
 
-return reply.type('text/html').send(htmlResponse);
+    return reply.type('text/html').send(htmlResponse)
 
     //return reply.send({ message: 'Logout successful' })
   })
