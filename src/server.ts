@@ -209,13 +209,6 @@ app.get(
   .then(() => console.log(`running on port 3333`))
  */
 
-/*   https.createServer({
-    cert: fs.readFileSync('./ssl/code.crt'), // Path to your SSL/TLS certificate file
-    key: fs.readFileSync('./ssl/code.key')   // Path to your SSL/TLS private key file
-  }, app).listen(443, () => {
-    console.log('Server is running on HTTPS');
-  }); */
-
   app.listen(3333, '0.0.0.0', (err) => {
     if (err) {
       console.error(err);
