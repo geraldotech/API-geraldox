@@ -14,6 +14,7 @@ import { clientes } from './routes/clients.js'
 import { fastifyCors } from '@fastify/cors'
 import fastifyStatic from '@fastify/static'
 import { loginLogOutHandler } from './routes/loginLogOutHandler.js'
+import https from 'https'
 
 import fastifyCookie from '@fastify/cookie'
 import fastifySession from '@fastify/session'
@@ -28,8 +29,12 @@ import dotenv from 'dotenv-safe'
 dotenv.config()
 //const fastifyJwt = require('@fastify/jwt')
 import fjwt, { FastifyJWT } from '@fastify/jwt'
+const fs = require('fs');
 
 const app = fastify()
+
+
+//app.register()
 
 app.register(fastifyCors, {
   origin: '*',
@@ -197,8 +202,48 @@ app.get(
 //slugsExistsOnEdit('api-geraldox', '9').then(r => console.log(`em uso`, r))
 
 // ====== MAIN =======
-app
+/* app
   .listen({
     port: 3333,
   })
   .then(() => console.log(`running on port 3333`))
+ */
+
+/*   https.createServer({
+    cert: fs.readFileSync('./ssl/code.crt'), // Path to your SSL/TLS certificate file
+    key: fs.readFileSync('./ssl/code.key')   // Path to your SSL/TLS private key file
+  }, app).listen(443, () => {
+    console.log('Server is running on HTTPS');
+  }); */
+
+  app.listen(3333, '0.0.0.0', (err) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    console.log('HTTP Server is running on port 3333');
+  });
+  
+
+
+
+// HTTPS server
+const options = {
+  cert: fs.readFileSync('./ssl/code.crt'), // Path to your SSL/TLS certificate file
+  key: fs.readFileSync('./ssl/code.key')   // Path to your SSL/TLS private key file
+};
+
+const httpsServer = https.createServer(options, (req, res) => {
+  fastify(req, res);
+});
+
+httpsServer.listen({
+  port: 5000,
+  host: '0.0.0.0'
+}, (err) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+  console.log('HTTPS Server is running on port 443');
+});

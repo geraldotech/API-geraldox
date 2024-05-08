@@ -28,6 +28,8 @@
     "ejs": "^3.1.10",
     "fastify": "^4.26.2",
     "fastify-type-provider-zod": "^1.1.9",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "remove": "^0.1.5",
     "sqlite": "^5.1.1",
