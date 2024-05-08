@@ -216,27 +216,3 @@ app.get(
     }
     console.log('HTTP Server is running on port 3333');
   });
-  
-
-
-
-// HTTPS server
-// const options = {
-//   cert: fs.readFileSync('./ssl/code.crt'), // Path to your SSL/TLS certificate file
-//   key: fs.readFileSync('./ssl/code.key')   // Path to your SSL/TLS private key file
-// };
-
-// const httpsServer = https.createServer(options, (req, res) => {
-//   fastify(req, res);
-// });
-
-// httpsServer.listen({
-//   port: 5000,
-//   host: '0.0.0.0'
-// }, (err) => {
-//   if (err) {
-//     console.error(err);
-//     process.exit(1);
-//   }
-//   console.log('HTTPS Server is running on port 443');
-// });
