@@ -27,6 +27,7 @@ export async function loginLogOutHandler(app: FastifyInstance) {
     const { user, password } = req.body as LoginData
 
     if (user === 'geraldo' && password === '123') {
+
       const payload = {
         id: 1,
         user: 'geraldo',
@@ -42,7 +43,7 @@ export async function loginLogOutHandler(app: FastifyInstance) {
       reply.setCookie('accessToken', token, {
         path: '/',
         httpOnly: true,
-        secure: true, // Enable this in production for HTTPS
+        secure: false, // Enable this in production for HTTPS
       })
       // if no query send to
      // let redirectTo = req.query.page && req.query.page !== 'null' ? req.query.page : '/dashboard'

@@ -57,7 +57,7 @@ app.addHook('preHandler', (req, res, next) => {
 
 // cookies
 app.register(fastifyCookie, {
-  secret: 'some-secret-key',
+  secret: process.env.SECRET,
   hook: 'preHandler',
 })
 //app.register(fastifySession, { secret: process.env.SECRET })
