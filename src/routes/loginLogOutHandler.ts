@@ -66,8 +66,8 @@ export async function loginLogOutHandler(app: FastifyInstance) {
   app.get('/logout', (req, reply) => {
     reply.setCookie('accessToken', '', {
       expires: new Date(0), // Set expiration time to epoch
-      httpOnly: false,
-      secure: true, // Enable this in production for HTTPS
+      httpOnly: true,
+      secure: false, // Enable this in production for HTTPS
     })
 
     const htmlResponse = `
