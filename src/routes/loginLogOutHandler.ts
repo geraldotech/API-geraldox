@@ -46,8 +46,7 @@ export async function loginLogOutHandler(app: FastifyInstance) {
         secure: false, // Enable this in production for HTTPS
       })
       // if no query send to
-     // let redirectTo = req.query.page && req.query.page !== 'null' ? req.query.page : '/dashboard'
-      let redirectTo = req.query.page && req.query.page !== 'null' ? req.query.page : '/dashboard'
+      let redirectTo = req.query.page && req.query.page !== 'null' ? req.query.page : '/'
 
       return reply.status(200).send({ redirectUrl: redirectTo, accessToken: token })
       // return { accessToken: token }

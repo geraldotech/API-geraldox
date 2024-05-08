@@ -4,7 +4,7 @@ import { version, createApp, ref, reactive, watch, watchEffect, onMounted } from
 usar este exemplo para constextualizar o template Refs
 */
 
-const baseURL = 'http://localhost:3333/post'
+const baseURL = 'http://apibr.gpdev.tech/post'
 
 const app = createApp({
   setup() {

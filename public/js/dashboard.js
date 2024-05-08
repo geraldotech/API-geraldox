@@ -1,5 +1,7 @@
 import { version, createApp, ref, reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
+const baseURL = 'http://apibr.gpdev.tech'
+
 const app = createApp({
   setup() {
     const message = ref('Hello')
@@ -13,7 +15,7 @@ const app = createApp({
       if (confirm('Delete ?')) {
         const ajaxn = new XMLHttpRequest()
 
-        ajaxn.open('DELETE', `http://localhost:3333/post/${slug}`)
+        ajaxn.open('DELETE', `${baseURL}/post/${slug}`)
 
         ajaxn.onload = function () {
           if (this.readyState === XMLHttpRequest.DONE) {
@@ -30,7 +32,7 @@ const app = createApp({
     }
 
     async function getall() {
-      fetch('http://localhost:3333/posts')
+      fetch(`${baseURL}/posts`)
         .then((res) => res.json())
         .then((data) => (posts.value = data))
     }
