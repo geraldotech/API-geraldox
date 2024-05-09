@@ -37,7 +37,7 @@ const app = fastify()
 //app.register()
 
 app.register(fastifyCors, {
-  origin: '*',
+  origin: 'api.geraldox.com',
 })
 
 app.register(require('@fastify/formbody'))
@@ -209,7 +209,7 @@ app.get(
   .then(() => console.log(`running on port 3333`))
  */
 
-  app.listen(3333, '0.0.0.0', (err) => {
+  app.listen(4444, '0.0.0.0', (err) => {
     if (err) {
       console.error(err);
       process.exit(1);

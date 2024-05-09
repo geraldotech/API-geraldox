@@ -42,7 +42,7 @@ export async function loginLogOutHandler(app: FastifyInstance) {
       reply.setCookie('accessToken', token, {
         path: '/',
         httpOnly: true,
-        secure: false, // Enable this in production for HTTPS
+        secure: true, // Enable this in production for HTTPS
       })
       // if no query send to
       let redirectTo = req.query.page && req.query.page !== 'null' ? req.query.page : '/'
@@ -67,7 +67,7 @@ export async function loginLogOutHandler(app: FastifyInstance) {
     reply.setCookie('accessToken', '', {
       expires: new Date(0), // Set expiration time to epoch
       httpOnly: true,
-      secure: false, // Enable this in production for HTTPS
+      secure: true, // Enable this in production for HTTPS
     })
 
     const htmlResponse = `
