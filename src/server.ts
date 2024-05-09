@@ -37,7 +37,7 @@ const app = fastify()
 //app.register()
 
 app.register(fastifyCors, {
-  origin: 'api.geraldox.com',
+  origin: '*',
 })
 
 app.register(require('@fastify/formbody'))

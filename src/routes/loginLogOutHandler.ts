@@ -26,7 +26,7 @@ export async function loginLogOutHandler(app: FastifyInstance) {
   app.post('/login', (req: FastifyRequest, reply: FastifyReply) => {
     const { user, password } = req.body as LoginData
 
-    if (user === 'geraldo' && password === '123') {
+    if (user === 'geraldo' && password === 'smartdicas@') {
       const payload = {
         id: 1,
         user: 'geraldo',
