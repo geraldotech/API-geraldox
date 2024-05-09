@@ -1,6 +1,6 @@
 import { version, createApp, ref, reactive, watch, watchEffect } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
-const baseURL = 'http://api.geraldox.com/post'
+const baseURL = 'https://api.geraldox.com/post'
 
 const app = createApp({
   setup() {
