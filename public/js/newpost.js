@@ -1,6 +1,7 @@
 import { version, createApp, ref, reactive, watch, watchEffect } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
-const baseURL = 'https://api.geraldox.com/post'
+//const baseURL = 'https://api.geraldox.com/post'
+const baseURL = 'http://localhost:4444/post'
 
 const app = createApp({
   setup() {
@@ -26,7 +27,26 @@ const app = createApp({
       vcomponent: '',
       published: true,
       customslug: false,
+      setCreateAt: false,
+      userSetCreateAt: '',
     })
+
+    // Function to convert date format from yyyy-mm-dd to dd/mm/yyyy
+    // poderia ser no backend
+    function formatDate(inputDate) {
+      // Split the input date into year, month, and day
+
+      if(inputDate === ''){
+        return ''
+      }
+
+      var parts = inputDate.split('-')
+
+      // Rearrange the parts to form the desired format
+      var formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0]
+
+      return formattedDate
+    }
 
     // active the mocking data
     //formData.value = mokeData
@@ -52,9 +72,10 @@ const app = createApp({
         published: formData.value.published,
         slug: sendCustomSlug,
         customslug: formData.value.customslug,
+        userSetCreateAt: formatDate(formData.value.userSetCreateAt), 
       })
 
-      // console.log(json)
+      console.log(json)
 
       //ajax
       const ajaxn = new XMLHttpRequest()
@@ -79,7 +100,7 @@ const app = createApp({
 
           serverresponse.value = resp.message
           cleanValues()
-          setTimeout(() => serverresponse.value = '', 2000)
+          setTimeout(() => (serverresponse.value = ''), 2000)
         }
 
         // Bad Request get zod response

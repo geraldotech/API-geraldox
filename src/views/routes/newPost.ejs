@@ -69,6 +69,14 @@
               v-model="customSlugData"
               :disabled="!formData.customslug" />
           </div>
+          <label for="setCreateAt">
+            <input type="checkbox" name="setCreateAt" id="setCreateAt" v-model="formData.setCreateAt">
+            setCreateAt</label>         
+            <input v-show="formData.setCreateAt" type="date"  
+           name="begin" 
+           placeholder="dd-mm-yyyy" 
+           v-model="formData.userSetCreateAt">
+
           Content:
           <textarea
             name=""

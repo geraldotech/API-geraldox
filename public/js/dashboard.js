@@ -1,6 +1,7 @@
 import { version, createApp, ref, reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
-const baseURL = 'https://api.geraldox.com'
+//const baseURL = 'https://api.geraldox.com'
+const baseURL = 'http://localhost:4444'
 
 const app = createApp({
   setup() {
