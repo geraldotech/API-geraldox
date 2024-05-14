@@ -6,7 +6,6 @@
 - [x] sqlite
 - [x] VueJS 3 client side
 
-
 ### `Installation`
 
 `npm install`

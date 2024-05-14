@@ -22,24 +22,20 @@ async function singlePost(slug: string) {
   }
 }
 
-
 export async function single(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>()
-  .get('/post/:slug',
-    async (request: any, reply) => {
-      const { slug } = request.params
+  app.withTypeProvider<ZodTypeProvider>().get('/post/:slug', async (request: any, reply) => {
+    const { slug } = request.params
 
-      const single = await singlePost(slug)
+    const single = await singlePost(slug)
 
-      if (!single) {
-        //throw new Error('Post not found')
-        return reply.status(404).send({
-          message: "We're sorry, but the post you are looking for could not be found, has been removed, or is currently unavailable. It may have been archived or deleted",
-          // to show stats in show response statusCode: 404, 
-        })
-      }
-
-      return reply.send(single)
+    if (!single) {
+      //throw new Error('Post not found')
+      return reply.status(404).send({
+        message: "We're sorry, but the post you are looking for could not be found, has been removed, or is currently unavailable. It may have been archived or deleted",
+        // to show stats in show response statusCode: 404,
+      })
     }
-  )
+
+    return reply.send(single)
+  })
 }
