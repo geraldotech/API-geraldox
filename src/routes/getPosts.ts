@@ -24,8 +24,18 @@ export async function getPosts(app: FastifyInstance) {
 
         // choose what want return
 
+        // Custom comparison function to compare timestamps in descending order
+        function compareTimestampsDescending(a, b) {
+          const timestampA = new Date(a.createdAt?.replace(/(\d{2})\/(\d{2})\/(\d{4}), (\d{2}):(\d{2})/, '$3-$2-$1T$4:$5'))
+          const timestampB = new Date(b.createdAt?.replace(/(\d{2})\/(\d{2})\/(\d{4}), (\d{2}):(\d{2})/, '$3-$2-$1T$4:$5'))
+
+          return timestampB - timestampA // Reversed order
+        }
+
+        return posts.sort(compareTimestampsDescending)
+
         // Return the selected posts
-        return posts
+      //  return posts
       } catch (error: any) {
         console.error('Error fetching published: ', error.message)
         return [] // Return an empty array in case of error

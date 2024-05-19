@@ -69,7 +69,6 @@ export async function createPost(app: FastifyInstance) {
       const slugIs = customslug ? getSlugFromStringCustom(slug) : getSlugFromString(title)
 
       const handleCreateAt = userSetCreateAt ===  '' ? createdAt2() : userSetCreateAt
-      console.log(handleCreateAt)
 
       const post: Post = {
         title,
