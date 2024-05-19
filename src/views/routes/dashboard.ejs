@@ -29,23 +29,32 @@
         class="button primary"
         >NewPost</a
       >
-      <!-- 
-      <section>
-        <div
-          class="cardsingle"
-          v-for="post in posts"
-          :key="posts.id">
-          <span> {{ post.title }}</span> <a href="#">DELETE</a> | <a href="#">Edit</a>
-        </div>
-      </section> -->
 
       <section id="listall">
-        <% const reversedAllPosts = allposts.map(post => post).reverse() %> <% for (let post of reversedAllPosts) { %>
+       <div class="header">
+       <!--  <h2>Post:</h2>
+        <h2>Category:</h2>
+        <h2>Actions:</h2> -->
+<!-- 
+        <%= JSON.stringify(allposts) %> -->
+     
 
+       
+       </div>
+        <% const reversedAllPosts = allposts.map(post => post) %> <% for (let post of reversedAllPosts) { %>
         <div>
-          <span>[<%= post.id %>] <a href="/post/<%= post.slug %>"><%= post.title %></a> </span>
-          <span><%= post.published ? 'published✅' : 'private❌' %></span>
+         <span>
+          <p>
+            [<%= post.id %>] <a href="/post/<%= post.slug %>"><%= post.title %></a> 
+            </p>
+            <p>Created: <%= post.createdAt %></p>
+            <p>lastUpdate: <%= post.lastUpdate %></p>
+         </span>
+        <div>
+            <span class="button primary"><%= post.category %></span>            
+          </div>
           <span class="buttons">
+            <span><%= post.published ? 'published✅' : 'private❌' %></span>
             <a
               href="/dashboard/edit/<%= post.slug %>"
               class="button secondary"
@@ -61,6 +70,7 @@
         </div>
         <% } %>
       </section>
+      <p data-baseurl="<%= BASEURL %>"></p>
     </div>
   </body>
 </html>

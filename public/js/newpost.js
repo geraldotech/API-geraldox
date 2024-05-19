@@ -1,7 +1,9 @@
 import { version, createApp, ref, reactive, watch, watchEffect } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
 //const baseURL = 'https://api.geraldox.com/post'
-const baseURL = 'http://localhost:4444/post'
+
+const getBASEURL = document.querySelector('p[data-baseurl]').dataset.baseurl
+const baseURL = `${getBASEURL}/post`
 
 const app = createApp({
   setup() {
@@ -23,7 +25,7 @@ const app = createApp({
       title: '',
       article: '',
       category: '',
-      author: '',
+      author: 'Geraldo',
       vcomponent: '',
       published: true,
       customslug: false,

@@ -47,22 +47,26 @@ body {
 .nav {
   padding: 1rem;
   background: #333;
+  
   margin-bottom: 1rem;
   & a {
     color: #fff;
   }
 }
 
-.topmenu {
+.top-menu {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   max-width: 400px;
+  & a {
+    font-size: 1.2rem;
+  }
 }
 
 
 /* cards */
 
-#listall div {
+#listall div, .header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1rem;
@@ -80,6 +84,10 @@ body {
   @media (max-width: 560px) {
     grid-template-columns: 1fr;
   }
+}
+
+.header h2:last-child {
+  text-align: center;
 }
 
 

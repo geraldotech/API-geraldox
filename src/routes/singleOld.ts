@@ -9,7 +9,7 @@ async function singlePost(slug: string) {
     const db = await openDb()
 
     // Execute SQL query to select a published post by slug
-    const post = await db.get('SELECT * FROM Posts WHERE slug = ?', slug)
+    const post = await db.get('SELECT * FROM Posts WHERE slug = ? AND published = 1', slug)
 
     // Close the database connection
     await db.close()
@@ -31,14 +31,7 @@ export async function single(app: FastifyInstance) {
     if (!single) {
       //throw new Error('Post not found')
       return reply.status(404).send({
-        message: "We're sorry, but the post you are looking for could not be found or is currently unavailable.",
-        // to show stats in show response statusCode: 404,
-      })
-    }
-
-    if(!single.published){
-      return  reply.status(404).send({
-        message: "We're sorry, this post is privated or It may have been archived",
+        message: "We're sorry, but the post you are looking for could not be found or is currently unavailable. It may have been archived or deleted",
         // to show stats in show response statusCode: 404,
       })
     }

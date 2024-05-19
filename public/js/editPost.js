@@ -5,7 +5,8 @@ usar este exemplo para constextualizar o template Refs
 */
 
 //const baseURL = 'https://api.geraldox.com/post'
-const baseURL = 'http://localhost:4444/post'
+
+const baseURL = document.querySelector('p[data-baseurl]').dataset.baseurl
 
 const app = createApp({
   setup() {
@@ -23,8 +24,7 @@ const app = createApp({
     const authorRef = ref('')
     const vuecompoRef = ref('')
     const publishedRef = ref('')
-
-
+    const setCreateAt = ref('')
 
     const shouldUpdateSlug = ref(false)
     const slugNewRef = ref('')
@@ -34,6 +34,10 @@ const app = createApp({
       const catBackendValue = catBackend.value.dataset.cat.toLowerCase()
       selectedCategory.value = catBackendValue
 
+      setTimeout(() => {
+        console.log(setCreateAt.value)
+      }, 2000)
+
       // refs template
       // using the data
       // console.log(slugNewRef.value.dataset.slug)
@@ -42,11 +46,10 @@ const app = createApp({
     })
 
     const submitHandler = () => {
-      handlerPost(`${baseURL}/${slugFromCurrentPost.value}`)
+      handlerPost(`${baseURL}/post/${slugFromCurrentPost.value}`)
     }
 
     function handlerPost(url) {
-
       const sendVueNullable = vuecompoRef.value.value === '' ? null : vuecompoRef.value.value
       console.log(vuecompoRef.value.value)
 
@@ -55,6 +58,7 @@ const app = createApp({
       const newPostData = {
         id: postid.value.dataset.postid,
         title: titleRef.value.value,
+        createdAt: setCreateAt.value.value,
         article: articleRef.value.value,
         category: catRef.value.value,
         author: authorRef.value.value,
@@ -65,39 +69,41 @@ const app = createApp({
         id: postid.value.dataset.postid,
       }
 
-      const { id, title, article, category, author, vcomponent, published, updateslug, newslug } = newPostData
+      const { id, title, createdAt, article, category, author, vcomponent, published, updateslug, newslug } = newPostData
 
-      const newslugFormated = newslug.normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .slice(0, 75)
+      const newslugFormated = newslug
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .slice(0, 75)
 
       const json = JSON.stringify({
         id,
         title,
         article,
+        createdAt,
         category,
         author,
         vuecomponent: vcomponent,
         published,
         updateslug,
-        newslug: newslugFormated
+        newslug: newslugFormated,
       })
 
       const jsonNoSlug = JSON.stringify({
         id,
         title,
         article,
+        createdAt,
         category,
         author,
         vuecomponent: vcomponent,
         published,
-        updateslug
+        updateslug,
       })
 
-
-      // console.log(json)
+       console.log(json)
       //ajax
       const ajaxn = new XMLHttpRequest()
       ajaxn.open('PUT', url)
@@ -105,7 +111,6 @@ const app = createApp({
 
       // custom obj
       updateslug ? ajaxn.send(json) : ajaxn.send(jsonNoSlug)
-
 
       ajaxn.onload = function (e) {
         // Check if the request was a success
@@ -161,13 +166,14 @@ const app = createApp({
       const newPostData = {
         id: +postid.value.dataset.postid,
         title: titleRef.value.value,
+        createdAt: setCreateAt.value.value,
         body: articleRef.value.value,
         category: catRef.value.value,
         author: authorRef.value.value,
         vuecomponent: sendVueNullable,
         published: publishedRef.value.checked,
         updateslug: shouldUpdateSlug.value,
-        newslug: slugNewRef.value.value
+        newslug: slugNewRef.value.value,
       }
 
       console.log(newPostData)
@@ -200,6 +206,7 @@ const app = createApp({
       publishedRef,
       shouldUpdateSlug,
       postid,
+      setCreateAt
     }
   },
 })

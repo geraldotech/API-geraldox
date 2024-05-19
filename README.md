@@ -1,5 +1,7 @@
 # APIgeraldoX
 
+- create, edit [custom slug createAt], delete, unpublish, updatedAt, categories, html tags(v-html rendering), author, vuecomponent
+
 - [x] Fastify
 - [x] Typescript
 - [x] Zod

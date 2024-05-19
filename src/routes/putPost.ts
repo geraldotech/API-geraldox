@@ -27,6 +27,7 @@ interface PostData {
 const postSchema = z.object({
   id: z.string().optional(),
   title: z.string().min(10).max(100).optional(),
+  createdAt: z.string().optional(),
   article: z.string().optional(), // keep data in database
   category: z.string().optional(), //if body no send, default, but if send must be string
   author: z.string().optional(),
@@ -50,7 +51,7 @@ export async function putPost(app: FastifyInstance) {
       const { slug } = request.params as { slug: string }
       
       // tudo que pode ser enviado pelo usuario na criação do post é o mesmo que pode vim a ser editado!
-      const { id, title, article, category, author, published, vuecomponent, updateslug, newslug } = request.body as PostData
+      const { id, title, createdAt, article, category, author, published, vuecomponent, updateslug, newslug } = request.body as PostData
 
      
       const shouldUpdateSlug = updateslug
@@ -82,6 +83,7 @@ export async function putPost(app: FastifyInstance) {
         UPDATE Posts 
         SET 
           title = COALESCE(?, title),
+          createdAt = COALESCE(?, createdAt),
           slug = COALESCE(?, slug),
           article = COALESCE(?, article),
           category = COALESCE(?, category),
@@ -97,10 +99,10 @@ export async function putPost(app: FastifyInstance) {
         // Execute the SQL statement with appropriate parameters
         if (vuecomponent === null || vuecomponent === '') {
           // If vuecomponent is null, bind null value
-          await stmt.run(title, newSlug, article, category, author, published, lastupdate, null, slug)
+          await stmt.run(title, createdAt, newSlug, article, category, author, published, lastupdate, null, slug)
         } else {
           // If vuecomponent is not null, bind the provided value
-          await stmt.run(title, newSlug, article, category, author, published, lastupdate, vuecomponent, slug)
+          await stmt.run(title, createdAt, newSlug, article, category, author, published, lastupdate, vuecomponent, slug)
         }
 
         // Finalize the statement

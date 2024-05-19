@@ -29,16 +29,15 @@ import dotenv from 'dotenv-safe'
 dotenv.config()
 //const fastifyJwt = require('@fastify/jwt')
 import fjwt, { FastifyJWT } from '@fastify/jwt'
-const fs = require('fs');
+const fs = require('fs')
 
 const app = fastify()
-
-
-//app.register()
 
 app.register(fastifyCors, {
   origin: '*',
 })
+
+
 
 app.register(require('@fastify/formbody'))
 
@@ -97,10 +96,16 @@ app.register(require('@fastify/view'), {
   engine: {
     ejs: require('ejs'),
   },
- // templates: 'views',
- templates: path.join(__dirname, 'views') // Specify the path to your views directory
-
+  // templates: 'views',
+  templates: path.join(__dirname, 'views'), // Specify the path to your views directory
 })
+
+function getCurrentBASE ()  {
+  const base = process.env.BASEURL
+  return base
+}
+
+
 
 // === Middlewares ===
 // https://fastify.dev/docs/latest/Reference/Hooks/#onrequest
@@ -202,17 +207,17 @@ app.get(
 //slugsExistsOnEdit('api-geraldox', '9').then(r => console.log(`em uso`, r))
 
 // ====== MAIN =======
-/* app
+app
   .listen({
-    port: 3333,
+    port: 4444,
   })
-  .then(() => console.log(`running on port 3333`))
- */
+  .then(() => console.log(`running on port 4444`))
 
-  app.listen(4444, '0.0.0.0', (err) => {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-    }
-    console.log('HTTP Server is running on port 4444');
-  });
+
+// app.listen(4444, '0.0.0.0', (err) => {
+//   if (err) {
+//     console.error(err)
+//     process.exit(1)
+//   }
+//   console.log('HTTP Server is running on port 4444')
+// })
