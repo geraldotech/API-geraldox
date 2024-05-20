@@ -1,4 +1,4 @@
-import { version, createApp, ref, reactive, watch, watchEffect } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+import { version, createApp, ref, reactive, watch, watchEffect, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
 //const baseURL = 'https://api.geraldox.com/post'
 
@@ -19,6 +19,7 @@ const app = createApp({
 
     const serverresponse = ref('')
     const customSlugData = ref('')
+    const categories = ref([])
 
     // get data from form
     const formData = ref({
@@ -38,7 +39,7 @@ const app = createApp({
     function formatDate(inputDate) {
       // Split the input date into year, month, and day
 
-      if(inputDate === ''){
+      if (inputDate === '') {
         return ''
       }
 
@@ -74,7 +75,7 @@ const app = createApp({
         published: formData.value.published,
         slug: sendCustomSlug,
         customslug: formData.value.customslug,
-        userSetCreateAt: formatDate(formData.value.userSetCreateAt), 
+        userSetCreateAt: formatDate(formData.value.userSetCreateAt),
       })
 
       console.log(json)
@@ -138,6 +139,16 @@ const app = createApp({
       formData.value.published = ''
     }
 
+    // fetch categories
+
+    onMounted(async () => {
+      const req = await fetch('https://api.geraldox.com/posts/categories')
+      if (req.ok) {
+        const data = await req.json()
+        categories.value = data
+      }
+    })
+
     //  deep option of the watch function.
     //This option allows you to watch nested properties within reactive objects.
     watch(
@@ -166,6 +177,7 @@ const app = createApp({
       serverresponse,
       cleanValues,
       customSlugData,
+      categories,
     }
   },
 })

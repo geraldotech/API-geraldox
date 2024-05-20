@@ -24,34 +24,52 @@
       <%- include('../partials/header') %>
       <h1>Dashboard</h1>
 
+     <div class="menu">
       <a
-        href="/dashboard/newpost"
-        class="button primary"
-        >NewPost</a
-      >
+      href="/dashboard/newpost"
+      class="button primary"
+      >NewPost</a
+    >
+
+    <form
+      id="searchPosts"
+      @submit.prevent="filterPosts"
+      class="search">
+      <input
+        type="text"
+        v-model="searchTerm"
+        placeholder="search posts" />
+      <button>Search</button>
+      <input type="reset" value="clear">
+    </form>
+     </div>
+   <!--    <h2>
+        <% var filteredPosts = allposts.filter(post => post.title.includes('Burnout')); %> <% filteredPosts.forEach(post => { %>
+        <div>
+          <h2><%= post.title %></h2>
+          <p><%= post.content %></p>
+        </div>
+        <% }); %>
+      </h2> -->
 
       <section id="listall">
-       <div class="header">
-       <!--  <h2>Post:</h2>
+        <div class="header">
+          <!--  <h2>Post:</h2>
         <h2>Category:</h2>
         <h2>Actions:</h2> -->
-<!-- 
+          <!-- 
         <%= JSON.stringify(allposts) %> -->
-     
-
-       
-       </div>
+        </div>
         <% const reversedAllPosts = allposts.map(post => post) %> <% for (let post of reversedAllPosts) { %>
-        <div>
-         <span>
-          <p>
-            [<%= post.id %>] <a href="/post/<%= post.slug %>"><%= post.title %></a> 
-            </p>
+        <div class="single">
+          <span>
+            <p class="post_title"><a href="/post/<%= post.slug %>"><%= post.title %></a></p>
+            <!--  <p>ID: [<%= post.id %>]</p> -->
             <p>Created: <%= post.createdAt %></p>
             <p>lastUpdate: <%= post.lastUpdate %></p>
-         </span>
-        <div>
-            <span class="button primary"><%= post.category %></span>            
+          </span>
+          <div>
+            <span class="button primary"><%= post.category %></span>
           </div>
           <span class="buttons">
             <span><%= post.published ? 'published✅' : 'private❌' %></span>

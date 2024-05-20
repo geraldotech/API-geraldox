@@ -98,14 +98,15 @@
               id="cat"
               ref="catRef"
               v-model="selectedCategory">
-              <option value="android">Android</option>
+              <option v-for="cat in categories">{{cat.category}}</option>
+             <!--  <option value="android">Android</option>
               <option value="developer">Developer</option>
               <option value="drivers">Drivers</option>
               <option value="linux">Linux</option>
               <option value="music">Music</option>
               <option value="network">Network</option>
               <option value="windows">Windows</option>
-              <option value="uncategorized">Uncategorized</option>
+              <option value="uncategorized">Uncategorized</option> -->
             </select>
           </div>
 

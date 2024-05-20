@@ -52,3 +52,7 @@ input {
   margin-top: 20px;
   justify-content: space-evenly;
 }
+
+#selectCat{
+  max-width: 50%;
+}

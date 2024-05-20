@@ -86,7 +86,13 @@
             v-model="formData.article"
             placeholder="article"></textarea>
           <div class="category">
-            <label for="cat">Category:</label>
+            <label for="selectCat">Select a category or create:</label>
+            <input type="text" id="selectCat" v-model="formData.category" list="search-options">
+            <datalist id="search-options"  id="cat">    
+              <option v-for="ca in categories">{{ca.category}}</option>        
+            </datalist>
+
+           <!--  <label for="cat">Category:</label>
             <select
               id="cat"
               v-model="formData.category">
@@ -103,7 +109,7 @@
               <option value="network">Network</option>
               <option value="windows">Windows</option>
               <option value="uncategorized">Uncategorized</option>
-            </select>
+            </select> -->
           </div>
 
           <div>

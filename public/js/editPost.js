@@ -4,8 +4,6 @@ import { version, createApp, ref, reactive, watch, watchEffect, onMounted } from
 usar este exemplo para constextualizar o template Refs
 */
 
-//const baseURL = 'https://api.geraldox.com/post'
-
 const baseURL = document.querySelector('p[data-baseurl]').dataset.baseurl
 
 const app = createApp({
@@ -28,21 +26,26 @@ const app = createApp({
 
     const shouldUpdateSlug = ref(false)
     const slugNewRef = ref('')
+    const categories = ref([])
 
     onMounted(() => {
       // get post slugs from dom ejs and assign to selectedCategory
       const catBackendValue = catBackend.value.dataset.cat.toLowerCase()
       selectedCategory.value = catBackendValue
 
-      setTimeout(() => {
-        console.log(setCreateAt.value)
-      }, 2000)
-
       // refs template
       // using the data
       // console.log(slugNewRef.value.dataset.slug)
 
       slugFromCurrentPost.value = slugNewRef.value.value
+    })
+
+    onMounted(async () => {
+      const req = await fetch(`${baseURL}/posts/categories`)
+      if (req.ok) {
+        const data = await req.json()
+        categories.value = data
+      }
     })
 
     const submitHandler = () => {
@@ -103,7 +106,7 @@ const app = createApp({
         updateslug,
       })
 
-       console.log(json)
+      console.log(json)
       //ajax
       const ajaxn = new XMLHttpRequest()
       ajaxn.open('PUT', url)
@@ -206,7 +209,8 @@ const app = createApp({
       publishedRef,
       shouldUpdateSlug,
       postid,
-      setCreateAt
+      setCreateAt,
+      categories,
     }
   },
 })

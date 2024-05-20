@@ -10,12 +10,14 @@
 * {
   box-sizing: border-box;
   color-scheme: dark;
+  margin: 0;
+  padding: 0;
 }
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.serverresponse{
+.serverresponse {
   text-align: center;
   margin-block: 15px;
   color: var(--warning-color);
@@ -25,8 +27,16 @@ body {
 
 .dashboard {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 10px auto;
+  padding: 10px;
 }
+
+.dashboard .menu {
+  display: flex;
+  margin-block: 10px;
+  justify-content: space-between;
+}
+
 
 .cardsingle {
   max-width: 800px;
@@ -42,12 +52,22 @@ body {
 }
 
 
+.search input,
+.search button {
+  border: none;
+  margin: 0 2px;
+}
+.search input,
+.search button {
+  padding: 8px;
+}
+
 /* Navbar */
 
 .nav {
   padding: 1rem;
   background: #333;
-  
+
   margin-bottom: 1rem;
   & a {
     color: #fff;
@@ -63,10 +83,10 @@ body {
   }
 }
 
-
 /* cards */
 
-#listall div, .header {
+#listall div,
+.header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1rem;
@@ -86,10 +106,17 @@ body {
   }
 }
 
+#listall p {
+  padding: 5px;
+}
+
+header {
+  margin-block: 10px;
+}
+
 .header h2:last-child {
   text-align: center;
 }
-
 
 /* Buttons */
 

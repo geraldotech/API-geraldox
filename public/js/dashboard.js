@@ -9,6 +9,7 @@ const app = createApp({
   setup() {
     const message = ref('Hello')
     const posts = ref([])
+    const searchTerm = ref('')
 
     const click = () => {
       console.log(`click`)
@@ -40,7 +41,23 @@ const app = createApp({
         .then((data) => (posts.value = data))
     }
 
-    //getall()
+    function filterPosts() {
+      console.log(`ok`)
+      // Get all post elements
+      const posts = document.querySelectorAll('.single');
+      
+      // Loop through posts and hide or show based on the criteria
+      posts.forEach(post => {
+        const title = post.querySelector('.post_title').innerText.toLowerCase();
+        if (title.includes(searchTerm.value.toLowerCase())) {
+          post.style.display = 'block';
+        } else {
+          post.style.display = 'none';
+        }
+      });
+    }
+    
+    
 
     return {
       message,
@@ -48,8 +65,12 @@ const app = createApp({
       getall,
       posts,
       handlerDelete,
+      searchTerm,
+      filterPosts
     }
   },
 })
 
 app.mount('#root')
+
+
