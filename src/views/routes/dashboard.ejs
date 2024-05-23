@@ -16,12 +16,13 @@
     <script
       type="module"
       src="/public/js/dashboard.js"></script>
+      <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
   </head>
   <body>
+    <%- include('../partials/header') %>
     <div
       id="root"
       class="dashboard">
-      <%- include('../partials/header') %>
       <h1>Dashboard</h1>
 
      <div class="menu">
@@ -63,7 +64,7 @@
         <% const reversedAllPosts = allposts.map(post => post) %> <% for (let post of reversedAllPosts) { %>
         <div class="single">
           <span>
-            <p class="post_title"><a href="/post/<%= post.slug %>"><%= post.title %></a></p>
+            <h4 class="post_title"><a href="/post/<%= post.slug %>"><%= post.title %></a></h4>
             <!--  <p>ID: [<%= post.id %>]</p> -->
             <p>Created: <%= post.createdAt %></p>
             <p>lastUpdate: <%= post.lastUpdate %></p>

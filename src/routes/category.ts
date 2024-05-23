@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { openDb } from '../configDB.js'
+import {compareTimestampsDescending} from '../../utils/compareTimestamp.js'
 
 export async function category(app: FastifyInstance) {
   app.get('/posts/category', async (request, reply) => {
@@ -35,7 +36,7 @@ export async function category(app: FastifyInstance) {
       }
 
       // Send the filtered posts as the response
-      reply.send(posts)
+      reply.send(posts.sort(compareTimestampsDescending))
 
       if (!name) {
         reply.send('')

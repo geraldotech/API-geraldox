@@ -6,21 +6,13 @@ interface LoginData {
 }
 
 export async function loginLogOutHandler(app: FastifyInstance) {
-  // Middleware for token verification
-  // app.addHook('onRequest', async (request, reply) => {
-  //   console.log(`ok`)
-  //   try {
-  //     await request.jwtVerify()
-  //   } catch (err) {
-  //     // If verification fails, send an error response
-  //     reply.code(401).send({ message: 'Unauthorized' })
-  //   }
-  // })
-
   app.get('/login', (req: FastifyRequest, reply: FastifyReply) => {
     // request.session.set<any>("not", "happy")
+    const isAuth = req.cookies.accessToken
+    const Auth = isAuth ? true : false
 
-    return reply.view('./routes/login.ejs', {})
+
+    return reply.view('./routes/login.ejs', {isAuth: Auth})
   })
 
   app.post('/login', (req: FastifyRequest, reply: FastifyReply) => {

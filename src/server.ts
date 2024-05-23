@@ -37,8 +37,6 @@ app.register(fastifyCors, {
   origin: '*',
 })
 
-
-
 app.register(require('@fastify/formbody'))
 
 // adding jwt property to req
@@ -85,6 +83,7 @@ app.decorate('authenticate', async (req: FastifyRequest, reply: FastifyReply) =>
   req.id = decoded
 })
 
+
 const publicFolder = path.join(__dirname, '../public')
 
 app.register(fastifyStatic, {
@@ -99,13 +98,6 @@ app.register(require('@fastify/view'), {
   // templates: 'views',
   templates: path.join(__dirname, 'views'), // Specify the path to your views directory
 })
-
-function getCurrentBASE ()  {
-  const base = process.env.BASEURL
-  return base
-}
-
-
 
 // === Middlewares ===
 // https://fastify.dev/docs/latest/Reference/Hooks/#onrequest
@@ -212,7 +204,6 @@ app
     port: 4444,
   })
   .then(() => console.log(`running on port 4444`))
-
 
 // app.listen(4444, '0.0.0.0', (err) => {
 //   if (err) {

@@ -9,6 +9,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
     <title>New Post</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
     <link
       rel="stylesheet"
       href="/public/css/main.css" />
@@ -20,13 +22,14 @@
     <script
       src="/public/js/newpost.js"
       type="module"></script>
+   
   </head>
   <body>
     <%- include('../partials/header') %>
 
-    <section class="title">
+    <div class="title">
       <h1>Add new post</h1>
-    </section>
+    </div>
 
     <div id="root">
       <section>
@@ -78,9 +81,7 @@
            v-model="formData.userSetCreateAt">
 
           Content:
-          <textarea
-            name=""
-            id=""
+          <textarea            
             cols="30"
             rows="10"
             v-model="formData.article"

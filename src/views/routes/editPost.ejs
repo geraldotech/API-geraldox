@@ -21,13 +21,14 @@
     <script
       src="/public/js/editPost.js"
       type="module"></script>
+      <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
   </head>
   <body>
     <%- include('../partials/header') %>
 
-    <section class="title">
+    <div class="title">
       <h1>Edit post</h1>
-    </section>
+    </div>
 
     <div id="root">
       <section>
@@ -99,14 +100,6 @@
               ref="catRef"
               v-model="selectedCategory">
               <option v-for="cat in categories">{{cat.category}}</option>
-             <!--  <option value="android">Android</option>
-              <option value="developer">Developer</option>
-              <option value="drivers">Drivers</option>
-              <option value="linux">Linux</option>
-              <option value="music">Music</option>
-              <option value="network">Network</option>
-              <option value="windows">Windows</option>
-              <option value="uncategorized">Uncategorized</option> -->
             </select>
           </div>
 
@@ -150,7 +143,7 @@
 
       <%= // JSON.stringify(single) %>
 
-      <button @click="testJSON()">Debug JSON</button>
+    <!--   <button @click="testJSON()">Debug JSON</button> -->
     </div>
     <p data-baseurl="<%= BASEURL %>"></p>
   </body>

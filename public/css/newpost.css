@@ -1,39 +1,33 @@
-body{
+body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.title{
-  text-align: center;
-}
-
-.errorInput{
+.errorInput {
   color: red;
 }
 
-section {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-form{
+form {
   display: flex;
   flex-direction: column;
-  padding: .5rem;
+  padding: 0.5rem;
   width: 100%;
   justify-content: flex-start;
 }
 
-form input:not(input[type='checkbox']), textarea {
+form input:not(input[type='checkbox']),
+textarea {
   width: 100%;
 }
 
-select, input, textarea{
-  margin-block: 10px;
+select,
+input,
+textarea {
   padding: 0.5rem;
 }
 
 input,
-button, textarea {
+button,
+textarea {
   border: 1px solid #fff;
   padding: 0.5rem;
 }
@@ -42,17 +36,16 @@ input {
   margin-block: 10px;
 }
 
-
 .category {
   text-align: left;
 }
 
-.form-buttons{
+.form-buttons {
   display: flex;
   margin-top: 20px;
   justify-content: space-evenly;
 }
 
-#selectCat{
+#selectCat {
   max-width: 50%;
 }

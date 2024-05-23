@@ -24,7 +24,7 @@ const app = createApp({
     // get data from form
     const formData = ref({
       title: '',
-      article: '',
+      article: '<p></p>',
       category: '',
       author: 'Geraldo',
       vcomponent: '',
@@ -43,10 +43,10 @@ const app = createApp({
         return ''
       }
 
-      var parts = inputDate.split('-')
+      const parts = inputDate.split('-')
 
       // Rearrange the parts to form the desired format
-      var formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0]
+      const formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0]
 
       return formattedDate
     }

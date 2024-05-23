@@ -13,8 +13,13 @@
   margin: 0;
   padding: 0;
 }
+p{
+  margin: 0 !important; 
+}
+
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: block !important;
 }
 
 .serverresponse {
@@ -37,18 +42,11 @@ body {
   justify-content: space-between;
 }
 
-
 .cardsingle {
   max-width: 800px;
   padding: 0.5rem;
   background-color: #333;
   margin-block: 5px;
-}
-
-.top-menu {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
 }
 
 
@@ -60,6 +58,7 @@ body {
 .search input,
 .search button {
   padding: 8px;
+  border: 1px solid;
 }
 
 /* Navbar */
@@ -67,7 +66,6 @@ body {
 .nav {
   padding: 1rem;
   background: #333;
-
   margin-bottom: 1rem;
   & a {
     color: #fff;
@@ -76,21 +74,25 @@ body {
 
 .top-menu {
   display: flex;
+  gap: 2rem;
   justify-content: center;
-  max-width: 400px;
+  max-width: 500px;
   & a {
     font-size: 1.2rem;
   }
 }
 
+.top-menu{
+  margin: 0 !important;
+}
+
 /* cards */
 
-#listall div,
-.header {
+ #listall .single{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr min(100px) 1fr;
   grid-gap: 1rem;
-  padding: 0.5rem;
+  width: 100%;
   margin: 0.2rem;
   background-color: #333;
   align-items: center;
@@ -98,6 +100,7 @@ body {
     display: flex;
     color: rebeccapurple;
     align-items: center;
+    gap: 10px;
     justify-content: space-between;
   }
   /* mobile */
@@ -107,15 +110,7 @@ body {
 }
 
 #listall p {
-  padding: 5px;
-}
-
-header {
-  margin-block: 10px;
-}
-
-.header h2:last-child {
-  text-align: center;
+font-size: 1rem;
 }
 
 /* Buttons */
@@ -125,7 +120,7 @@ header {
   padding: 10px 20px;
   color: #fff;
   text-decoration: none;
-  border: none;
+  border: none !important;
   /* border-radius: 5px; */
   cursor: pointer;
 }
