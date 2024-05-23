@@ -86,6 +86,11 @@ body {
   margin: 0 !important;
 }
 
+#root{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 /* cards */
 
  #listall .single{
@@ -96,6 +101,7 @@ body {
   margin: 0.2rem;
   background-color: #333;
   align-items: center;
+  padding: .5rem;
   & .buttons {
     display: flex;
     color: rebeccapurple;
