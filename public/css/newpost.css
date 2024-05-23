@@ -1,6 +1,3 @@
-body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
 
 .errorInput {
   color: red;
@@ -28,7 +25,6 @@ textarea {
 input,
 button,
 textarea {
-  border: 1px solid #fff;
   padding: 0.5rem;
 }
 
