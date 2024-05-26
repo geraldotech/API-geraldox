@@ -68,7 +68,8 @@ export async function createPost(app: FastifyInstance) {
       // getSlugFromString(slug) em caso client send: `my cool slug with spaces ação`
       const slugIs = customslug ? getSlugFromStringCustom(slug) : getSlugFromString(title)
 
-      const handleCreateAt = userSetCreateAt ===  '' ? createdAt2() : userSetCreateAt
+      // if user not defined date genetate it or get user date and add a hour, it is necessary to sort function
+      const handleCreateAt = userSetCreateAt ===  '' ? createdAt2() : `${userSetCreateAt}, 12:00`
 
       const post: Post = {
         title,
