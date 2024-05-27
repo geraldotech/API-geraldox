@@ -1,31 +1,39 @@
+
+![NodeJS](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![SQLite](https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![VueJS](https://img.shields.io/badge/Vue%20js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
+![Fastify](https://img.shields.io/badge/fastify-202020?style=for-the-badge&logo=fastify&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
+![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=Oracle&logoColor=white)
+
+
 # APIgeraldoX
 
+## Table of Contents:
 - create, edit [custom slug createAt], delete, unpublish, updatedAt, categories, html tags(v-html rendering), author, vuecomponent
 
-- [x] Fastify
-- [x] Typescript
 - [x] Zod
-- [x] sqlite
-- [x] VueJS 3 client side
+## Installation
 
-### `Installation`
-
-`npm install`
+1. Clone the repository:
+2. `npm install`
 
 
-### setUP BaseURL and cors origin
+### setup BaseURL and cors origin
 > baseURL from .env in soon
 
 - dashboard.js
 - editPost.js
 - newpost.js
 
-## `RUN`
+## Usage
 
 `npm run server`
 
-## `Routes`
+## API Endpoints
 
+The API provides the following endpoints:
 
 ```js
 
@@ -140,24 +148,19 @@ createdAt: Auto-generated Timestamps
 FastifyError [Error]: Failed building the validation schema for GET: /post/:slug, due to error schema is invalid: data/required must be array` try it https://github.com/turkerdev/fastify-type-provider-zod
 
 
-# Next features:
 
-- updatedAt?
-- images?
-
-
-# installed
+## installed
 
 - npm install @fastify/static@next
 - npm i @fastify/cors
 
 
-# Bugs
+## Bugs
 
 - json dont send "" will broken the text, i need add a 
 
 
-# JWT
+##   JWT
 
 - [LINK1](https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-node-js-2/)
 - [LINK3](https://thatarif.in/posts/token-based-authentication-with-fastify-jwt)
